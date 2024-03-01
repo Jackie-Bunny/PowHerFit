@@ -1,0 +1,418 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+body{
+    overflow-x: hidden;
+    background-color: #fff;
+     
+}
+
+h1,h2,h3,h4,h4,h5,h6{
+    font-family: "Poppins", sans-serif;  
+}
+a,p,button{
+    font-family: "Roboto", sans-serif;
+    text-decoration: none;
+}
+
+.labellist label {
+    color: #64748b;
+    font-weight: 500;
+    line-height: 1.25;
+    font-size: 14px;
+}
+.formlist input {
+    background-color: #f1f5f9;
+    border: 0;
+    height: 40px;
+    width: 80%;
+    border-radius: 50px;
+    padding: 5px 43px;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 600;
+}
+.admin_img {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 9999px;
+    margin-right: 0.75rem;
+}
+
+.formlist {
+    position: relative;
+}
+.notifationlist ul {
+    display: flex;
+    justify-content: end;
+}
+
+.dashboardlist.topHeader {
+    padding: 14px 0;
+}
+.formlist i {
+    position: absolute;
+    left: 12px;
+    top: 13px;
+}
+.notifationlist ul li {
+    list-style: none;
+    margin: 0 7px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.sidebar ul li .accordion-item {
+    border: 0;
+}
+.sidebar .accordion-item>.accordion-header .accordion-button {
+    border: 0;
+    background-color: transparent;
+}
+
+.sidebar ul li {
+    list-style: none;
+    padding: 0.25rem 0.5rem;
+}
+.sidebar ul {
+    padding: 0;
+}
+
+.dashbordcontent {
+    background-color: #f1f5f9;
+    padding: 50px 0 50px;
+}
+.sidebar ul li .accordion-item {
+    border: 0;
+    background-color: transparent;
+    width: 90%;
+}
+.sidebar h2 button i {
+    margin: 0 17px 0 0;
+    font-size: 21px;
+    color: #64748b;
+    position: relative;
+    top: -3px;
+}
+.sidebar .accordion-button:not(.collapsed){
+    color: #64748b;
+}
+.notifationlist {
+    margin: 10px 0 0 0;
+}
+.accordion-body ul li a.active{
+    color: #e8118bbf;
+    font-weight: 600;
+}
+.accordion-body ul li a {
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 25px;
+}
+.accordion-body ul {
+    padding: 0 38px;
+}
+.footerlist {
+    text-align: right;
+    padding: 3px 0;
+    font-size: 14px;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 25px;
+}
+section.footersec {
+    background-color: #f1f5f9;
+}
+
+.userform input {
+    background-color: #fff;
+}
+.userlist h3 {
+    color: #64748b;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-bottom: 0.75rem;
+}
+.table {
+    padding: 50px 0;
+}
+.usersbtn button {
+    background-color: #e8118bbf;
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border: 0;
+    padding: 8px 17px;
+    border-radius: 10px;
+    float: right;
+    position: relative;
+    top: 33px;
+}
+.usersbtn a {
+    background-color: #e8118bbf;
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 800;
+    border: 0;
+    padding: 8px 17px;
+    border-radius: 6px;
+    float: right;
+    position: relative;
+    top: 33px;
+    text-decoration: none;
+}
+.sidebar .accordion-button:not(.collapsed) {
+    box-shadow: none;
+    padding: 0;
+}
+.table table thead tr th {
+    color: #777;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 20px;
+}
+.notifationlist ul li a svg {
+    color: #64748b;
+}
+button#dropdown-basic {
+    background-color: transparent;
+    border: 0;
+    color: #64748b;
+    padding: 0;
+}
+.table .table>:not(caption)>*>* {
+    padding: 15px 17px;
+}
+td.idno {
+    color: #ea49a6 !important;
+}
+.table table tbody tr td {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+}
+
+.createprogrameformbox {
+    background-color: #fff;
+    padding: 20px;
+    margin: 0 34px 0 0;
+    border-radius: 10px;
+}
+.labellist input {
+    height: 40px;
+    color: #000;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    border: 1px solid #cbd5e1;
+}
+.labellist textarea {
+    height: 120px;
+    color: #000;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    border: 1px solid #cbd5e1;
+}
+.labellist select {
+    height: 40px;
+    color: #000;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 400;
+    border: 1px solid #cbd5e1;
+}
+
+hr.line {
+    border: 1px solid #cbd5e1;
+    margin: 20px 0 20px 0;
+}
+
+.prmemium {
+    margin: 20px -11px 20px;
+}
+
+
+
+label.upload input {
+    border: 0;
+}
+
+
+.upload {
+    border: 2px solid #777;
+    border-style: dashed;
+    width: 100%;
+    height: 73px;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 15px 22px;
+} 
+
+
+
+.cancel {
+    border: 0;
+    background-color: transparent;
+    color: #777;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 25px;
+}
+.btnlist {
+    display: flex;
+    justify-content: end;
+    margin: 27px 0;
+}
+.btnlist button {
+    margin: 0 13px;
+}
+button.create {
+    background-color: #e8118bbf;
+    border: 0;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+}
+
+.labellist1 input[type="checkbox"] {
+    height: auto;
+    margin: 1px 10px 0 0;
+}
+.labellist1 {
+    display: flex;
+    margin: 10px 0;
+}
+
+label.headbody {
+    background-color: #f1f5f9;
+    width: 100%;
+    padding: 13px 16px;
+    color: #64748b;
+    font-weight: 500;
+    line-height: 1.25;
+    font-size: 14px;
+    border: 1px solid #64748b;
+}
+label.headbody.TITLE {
+    border-top-left-radius: 10px;
+}
+label.headbody.LINK {
+    border-top-right-radius: 10px;
+}
+
+#socaillinksadd {
+    border: 0;
+    background-color: transparent;
+    margin: 4% auto;
+    display: table;
+    color: #ea49a6;
+    font-weight: 600;
+    font-size: 15px;
+}
+#socaillinksadd i {
+    margin: 0 5px;
+}
+
+.fieldinput.TITLE input{
+    border-radius: 0px 0 0px 0px;
+}
+.fieldinput.LINK input{
+    border-radius: 0px 0px 0px 0px;
+}
+
+.fieldinput input {
+    color: #64748b;
+    font-weight: 500;
+    line-height: 1.25;
+    font-size: 14px;
+    border: 1px solid #64748b;
+    height: 50px;
+}
+
+button#socaillinksremove {
+    border: 0;
+    background-color: transparent;
+    color: #ea49a6;
+}
+.labellist.socailbody {
+    position: relative;
+}
+.socaillinksremove {
+    position: absolute;
+    top: 37%;
+    right: -10%;
+}
+.sidebar .accordion-header {
+    color: #64748b;
+    margin-bottom: 0;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5rem;
+}
+
+.loginform {
+    padding: 150px 0 150px;
+}
+.logininput label {
+    color: #000;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 400;
+    margin: 9px 0;
+}
+.logininput input[type="checkbox"] {
+    margin: 16px 4px 12px 0;
+}
+.loginbtn {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+.loginbtn a {
+    color: #000;
+    text-decoration: underline;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+    margin: 0 21px;
+}
+.loginbtn button {
+    background-color: #ec4899;
+    border: 0;
+    color: #fff;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    padding: 8px 32px;
+    border-radius: 5px;
+}
+.loginform {
+    background-color: #fff;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 2px 2px #ccc;
+    padding: 30px;
+}
+
+.loginsec {
+    background-color: #f1f5f9;
+    height: 100vh;
+    padding: 130px 0 150px;
+}
+.loginsec h3 {
+    text-align: center;
+    color: #ec4899;
+    font-size: 50px;
+    line-height: 55px;
+    font-weight: 600;
+}
