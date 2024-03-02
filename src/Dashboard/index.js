@@ -4,21 +4,14 @@ import Users from "../Components/Users";
 
 
 
+const DashBoard = () => {
+    
+    return (
+        <>
+            <Users></Users>
+        </>
 
-const DashBoard =()=>{
-
-return(
-
-<>
-
-<Users></Users>
-</>
-
-
-) 
-
-
+    )
 }
-
 
 export default DashBoard;

@@ -1,79 +1,99 @@
-import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
-import { Outlet,Link } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserData } from '../redux/actions';
+import { CurrentLogin, setLogin } from '../redux/reducers';
 
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
+  const userData = useSelector(state => state.data.data);
 
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
 
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const Login = ()=>{
-   
-    
-return(
+    try {
+      const response = await fetch('http://appsdemo.pro/Pawherfit/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+      });
+      const data = await response.json();
+      console.log(data);
 
-<>
-<div className="loginsec">
-<div className="container">
-<div className="row justify-content-center">
-<div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-<h3>PowHer Fit</h3>
-<div className="loginform">
+      if (data.success) {
+        dispatch(CurrentLogin(data)); // Store user data in Redux store
+        window.location.href = "/Users";
+      }
+    } catch (error) {
+      console.error('Error logging in:', error);
+    }
+  };
 
-<form>
-    <div className="row">
-      <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 ">
-        <div className="logininput">
-          <label>Email</label>
-          <input type="email"  name="email" className="form-control"/>
+  return (
+    <div className="loginsec">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+            <h3>PowHer Fit</h3>
+            <div className="loginform">
+              <form onSubmit={handleSubmit}>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="logininput">
+                      <label>Email</label>
+                      <input type="email" name="email" className="form-control" value={email} onChange={handleEmailChange} />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="logininput">
+                      <label>Password</label>
+                      <input type="password" name="password" className="form-control" value={password} onChange={handlePasswordChange} />
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="logininput">
+                      <label>
+                        <input type="checkbox" name="rememberme" />
+                        Remember me
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    <div className="loginbtn">
+                      <Link to="">Forget your password ?</Link>
+                      <button type="submit">Login</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div className="row">
-      <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 ">
-        <div className="logininput">
-          <label>Password</label>
-          <input type="password"  name="email" className="form-control" />
-        </div>
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 ">
-        <div className="logininput">
-          <label>
-            <input type="checkbox"  name="rememberme"/>
-            Remember me
-          </label>
-        </div>
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12 ">
-        <div className="loginbtn">
-          <Link to="/Users">Forget your password?</Link>
-          <Outlet/>
-          <button type="submit">Login</button>
-        </div>
-      </div>
-    </div>
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</>
-
-
-)
-
-
-
-
-}
-
-
+  );
+};
 
 export default Login;

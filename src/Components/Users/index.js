@@ -1,18 +1,46 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideNav from "../SideNav";
 import SideBar from "../../SideBar";
 import { Link, Outlet } from "react-router-dom";
 import Footer from "../../Footer";
+import { useSelector } from 'react-redux';
+
 
 
 
 const Users = () => {
+    const [users, setUsers] = useState([]);
+
+    const userData = useSelector(state => state.data.data);
+
+    useEffect(() => {
+        // Fetch users data from the API
+        console.log("Data from redux", userData);
+        const fetchData = async () => {
+            try {
+                const response = await fetch('http://appsdemo.pro/Pawherfit/user/get-all-users');
+                const data = await response.json();
+                if (data.success) {
+                    setUsers(data.message); // Update state with fetched users
+                    console.log(data.message);
+                } else {
+                    console.error('Failed to fetch users:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, []); // Run only once on component mount
+
 
     return (
         <>
-         <SideBar></SideBar>
+            <SideBar userData={userData}></SideBar>
             <div className="dashbordcontent">
                 <div className="container-fluid">
                     <div className="row">
@@ -32,7 +60,7 @@ const Users = () => {
                                     <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                         <div className="usersbtn">
                                             <Link to="CreateUsers">Create User</Link>
-                                            <Outlet/>
+                                            <Outlet />
                                         </div>
                                     </div>
                                 </div>
@@ -52,55 +80,24 @@ const Users = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     <tr>
-                                        <td>
-                                            <div className="checklist">
-                                              <form>
-                                                <input type="checkbox" />
-                                              </form> 
-                                            </div>
-                                        </td>
-                                        <td className="idno">5417</td>
-                                        <td>Lindsey Wilkinson</td>
-                                        <td><i class="fa-regular fa-circle-check"></i></td>
-                                        <td><i class="fa-regular fa-minus"></i></td>
-                                        <td>Regular</td>
-                                        <td><i class="fa-regular fa-minus"></i></td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                     </tr>
-                                     <tr>
-                                        <td>
-                                            <div className="checklist">
-                                              <form>
-                                                <input type="checkbox" />
-                                              </form> 
-                                            </div>
-                                        </td>
-                                        <td className="idno">5417</td>
-                                        <td>Lindsey Wilkinson</td>
-                                        <td><i class="fa-regular fa-circle-check"></i></td>
-                                        <td><i class="fa-regular fa-minus"></i></td>
-                                        <td>Regular</td>
-                                        <td><i class="fa-regular fa-minus"></i></td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                     </tr>
-                                     <tr>
-                                        <td>
-                                            <div className="checklist">
-                                              <form>
-                                                <input type="checkbox" />
-                                              </form> 
-                                            </div>
-                                        </td>
-                                        <td className="idno">5417</td>
-                                        <td>Lindsey Wilkinson</td>
-                                        <td><i class="fa-regular fa-circle-check"></i></td>
-                                        <td><i class="fa-regular fa-minus"></i></td>
-                                        <td>Regular</td>
-                                        <td><i class="fa-regular fa-minus"></i></td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                     </tr>
-                                     
+                                        {users.map(user => (
+                                            <tr key={user._id}>
+                                                <td>
+                                                    <div className="checklist">
+                                                        <form>
+                                                            <input type="checkbox" />
+                                                        </form>
+                                                    </div>
+                                                </td>
+                                                <td className="idno">{user._id}</td>
+                                                <td>{user.name}</td>
+                                                <td><i class="fa-regular fa-circle-check"></i></td>
+                                                <td><i class="fa-regular fa-minus"></i></td>
+                                                <td>{user.type}</td>
+                                                <td><i class="fa-regular fa-minus"></i></td>
+                                                <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            </tr>
+                                        ))}
                                     </tbody>
                                 </table>
                             </div>
@@ -108,7 +105,7 @@ const Users = () => {
                     </div>
                 </div>
             </div>
-         <Footer/>
+            <Footer />
         </>
 
 
