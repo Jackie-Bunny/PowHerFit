@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Img1 from '../Assets/Images/admin_img.jpg';
 import { setLogout } from '../redux/reducers';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
-const SideBar = ({ userData }) => {
+const SideBar = () => {
+  const userData = useSelector(state => state.data.data);
   const dispatch = useDispatch();
 
   const token = userData.token;

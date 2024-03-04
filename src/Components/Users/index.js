@@ -18,7 +18,7 @@ const Users = () => {
 
     useEffect(() => {
         // Fetch users data from the API
-        console.log("Data from redux", userData);
+        console.log("User page data from redux", userData);
         const fetchData = async () => {
             try {
                 const response = await fetch('http://appsdemo.pro/Pawherfit/user/get-all-users');
@@ -40,7 +40,7 @@ const Users = () => {
 
     return (
         <>
-            <SideBar userData={userData}></SideBar>
+            <SideBar></SideBar>
             <div className="dashbordcontent">
                 <div className="container-fluid">
                     <div className="row">

@@ -1,16 +1,23 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import { Outlet,Link } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 const SideNav = () => {
 
+    const userData = useSelector(state => state.data.data);
+    const dispatch = useDispatch();
+
+    const token = userData.token;
+    console.log(token);
+
     return (
 
         <>
-          
+
             <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                 <div className="sidebar">
                     <ul>
@@ -27,7 +34,7 @@ const SideNav = () => {
                                         <div className="accordion-body">
                                             <ul>
                                                 <li><Link to="/Users" className="active">Users</Link></li>
-                                                <Outlet/>
+                                                <Outlet />
                                             </ul>
                                         </div>
                                     </div>
@@ -46,11 +53,11 @@ const SideNav = () => {
                                     <div id="collapseThree" className="accordion-collapse collapse show" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                                         <div className="accordion-body">
                                             <ul>
-                                                <li><Link  to ="/Programs">Programs</Link></li>
-                                                <li><Link  to ="/Weeks">Weeks</Link></li>
-                                                <li><Link  to ="/Method">Method</Link></li>
-                                                <li><Link  to ="/Workout">Workout</Link></li>
-                                                <li><Link  to ="/Exercises">Exercises</Link></li>
+                                                <li><Link to="/Programs">Programs</Link></li>
+                                                <li><Link to="/Weeks">Weeks</Link></li>
+                                                <li><Link to="/Method">Method</Link></li>
+                                                <li><Link to="/Workout">Workout</Link></li>
+                                                <li><Link to="/Exercises">Exercises</Link></li>
                                             </ul>
                                         </div>
                                     </div>

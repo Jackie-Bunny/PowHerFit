@@ -7,15 +7,13 @@ import { Link, Outlet } from "react-router-dom";
 
 
 
+const Programs = () => {
 
+    return (
 
-const Programs =() =>{
-
-return(
-
- <>
- <SideBar></SideBar>
- <div className="dashbordcontent">
+        <>
+            <SideBar></SideBar>
+            <div className="dashbordcontent">
                 <div className="container-fluid">
                     <div className="row">
                         <SideNav></SideNav>
@@ -34,7 +32,7 @@ return(
                                     <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                                         <div className="usersbtn">
                                             <Link to="/CreatePrograms/">Create Programs</Link>
-                                            <Outlet/>
+                                            <Outlet />
                                         </div>
                                     </div>
                                 </div>
@@ -54,54 +52,54 @@ return(
                                         </tr>
                                     </thead>
                                     <tbody>
-                                     <tr>
-                                        <td>
-                                            <div className="checklist">
-                                              <form>
-                                                <input type="checkbox" />
-                                              </form> 
-                                            </div>
-                                        </td>
-                                        <td className="idno">1</td>
-                                        <td>Strength 1.0 - Home - Beginner</td>
-                                        <td>Home</td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                        <td>Beginner</td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                        <td>Publish</td>
-                                     </tr>
-                                     <tr>
-                                        <td>
-                                            <div className="checklist">
-                                              <form>
-                                                <input type="checkbox" />
-                                              </form> 
-                                            </div>
-                                        </td>
-                                        <td className="idno">2</td>
-                                        <td>Strength 1.0 - Home - Beginner</td>
-                                        <td>Home</td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                        <td>Beginner</td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                        <td>Publish</td>
-                                     </tr>
-                                     <tr>
-                                        <td>
-                                            <div className="checklist">
-                                              <form>
-                                                <input type="checkbox" />
-                                              </form> 
-                                            </div>
-                                        </td>
-                                        <td className="idno">3</td>
-                                        <td>Strength 1.0 - Home - Beginner</td>
-                                        <td>Home</td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                        <td>Beginner</td>
-                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
-                                        <td>Publish</td>
-                                     </tr>
+                                        <tr>
+                                            <td>
+                                                <div className="checklist">
+                                                    <form>
+                                                        <input type="checkbox" />
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td className="idno">1</td>
+                                            <td>Strength 1.0 - Home - Beginner</td>
+                                            <td>Home</td>
+                                            <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td>Beginner</td>
+                                            <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td>Publish</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div className="checklist">
+                                                    <form>
+                                                        <input type="checkbox" />
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td className="idno">2</td>
+                                            <td>Strength 1.0 - Home - Beginner</td>
+                                            <td>Home</td>
+                                            <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td>Beginner</td>
+                                            <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td>Publish</td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div className="checklist">
+                                                    <form>
+                                                        <input type="checkbox" />
+                                                    </form>
+                                                </div>
+                                            </td>
+                                            <td className="idno">3</td>
+                                            <td>Strength 1.0 - Home - Beginner</td>
+                                            <td>Home</td>
+                                            <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td>Beginner</td>
+                                            <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                            <td>Publish</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -111,7 +109,7 @@ return(
             </div>
 
 
- </>
+        </>
 
 
     )
