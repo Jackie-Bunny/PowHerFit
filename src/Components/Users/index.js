@@ -9,22 +9,26 @@ import Footer from "../../Footer";
 import { useSelector } from 'react-redux';
 
 
-
-
 const Users = () => {
     const [users, setUsers] = useState([]);
 
     const userData = useSelector(state => state.data.data);
 
+    const token = userData.token;
+    
     useEffect(() => {
-        // Fetch users data from the API
-        console.log("User page data from redux", userData);
         const fetchData = async () => {
             try {
-                const response = await fetch('http://appsdemo.pro/Pawherfit/user/get-all-users');
+                const response = await fetch('http://appsdemo.pro/Pawherfit/user/get-all-users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 const data = await response.json();
                 if (data.success) {
-                    setUsers(data.message); // Update state with fetched users
+                    setUsers(data.message);
                     console.log(data.message);
                 } else {
                     console.error('Failed to fetch users:', data.message);
@@ -35,7 +39,7 @@ const Users = () => {
         };
 
         fetchData();
-    }, []); // Run only once on component mount
+    }, [token]); // Run only once on component mount
 
 
     return (

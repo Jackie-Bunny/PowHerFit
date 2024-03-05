@@ -273,8 +273,6 @@ label.upload input {
 }
 .btnlist button {
     margin: 0 13px;
-}
-button.create {
     background-color: #e8118bbf;
     border: 0;
     color: #fff;
