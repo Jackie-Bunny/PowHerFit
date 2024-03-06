@@ -23,7 +23,7 @@ const WorkOut = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://appsdemo.pro/Pawherfit/method-exercise/get-workout', {
+                const response = await fetch('https://appsdemo.pro/Pawherfit/method-exercise/get-workout', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

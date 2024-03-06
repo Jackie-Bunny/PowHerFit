@@ -40,7 +40,7 @@ const CreateWorkOut = () => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://appsdemo.pro/Pawherfit/method-exercise/add-workout',
+            url: 'https://appsdemo.pro/Pawherfit/method-exercise/add-workout',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -67,7 +67,7 @@ const CreateWorkOut = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://appsdemo.pro/Pawherfit/method-exercise/get-week', {
+                const response = await fetch('https://appsdemo.pro/Pawherfit/method-exercise/get-week', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
