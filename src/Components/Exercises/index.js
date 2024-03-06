@@ -61,7 +61,7 @@ return(
                                             </div>
                                         </td>
                                         <td className="idno">2436</td>
-                                        <td>Bench Tricep Dips</td>
+                                        <td><Link to="/Exercises/ExercisesDetails">Bench Tricep Dips</Link></td>
                                         <td>Tabata</td>
                                         <td>Gym</td>
                                         <td><i className="fa-light fa-circle-xmark"></i></td>

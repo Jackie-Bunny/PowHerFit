@@ -1,17 +1,25 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-body{
+body {
     overflow-x: hidden;
     background-color: #fff;
-     
+
 }
 
-h1,h2,h3,h4,h4,h5,h6{
-    font-family: "Poppins", sans-serif;  
+h1,
+h2,
+h3,
+h4,
+h4,
+h5,
+h6 {
+    font-family: "Poppins", sans-serif;
 }
-a,p,button{
+
+a,
+p,
+button {
     font-family: "Roboto", sans-serif;
     text-decoration: none;
 }
@@ -22,6 +30,7 @@ a,p,button{
     line-height: 1.25;
     font-size: 14px;
 }
+
 .formlist input {
     background-color: #f1f5f9;
     border: 0;
@@ -33,6 +42,7 @@ a,p,button{
     line-height: 20px;
     font-weight: 600;
 }
+
 .admin_img {
     width: 2rem;
     height: 2rem;
@@ -43,6 +53,7 @@ a,p,button{
 .formlist {
     position: relative;
 }
+
 .notifationlist ul {
     display: flex;
     justify-content: end;
@@ -51,11 +62,13 @@ a,p,button{
 .dashboardlist.topHeader {
     padding: 14px 0;
 }
+
 .formlist i {
     position: absolute;
     left: 12px;
     top: 13px;
 }
+
 .notifationlist ul li {
     list-style: none;
     margin: 0 7px;
@@ -66,6 +79,7 @@ a,p,button{
 .sidebar ul li .accordion-item {
     border: 0;
 }
+
 .sidebar .accordion-item>.accordion-header .accordion-button {
     border: 0;
     background-color: transparent;
@@ -75,6 +89,7 @@ a,p,button{
     list-style: none;
     padding: 0.25rem 0.5rem;
 }
+
 .sidebar ul {
     padding: 0;
 }
@@ -83,28 +98,35 @@ a,p,button{
     background-color: #f1f5f9;
     padding: 50px 0 50px;
 }
+
 .sidebar ul li .accordion-item {
     border: 0;
     background-color: transparent;
-    width: 90%;
+    width: 100%;
 }
+
 .sidebar h2 button i {
-    margin: 0 17px 0 0;
+    margin: 0 0px 0 0;
     font-size: 21px;
     color: #64748b;
     position: relative;
     top: -3px;
+    left: -15px;
 }
-.sidebar .accordion-button:not(.collapsed){
+
+.sidebar .accordion-button:not(.collapsed) {
     color: #64748b;
 }
+
 .notifationlist {
     margin: 10px 0 0 0;
 }
-.accordion-body ul li a.active{
+
+.accordion-body ul li a.active {
     color: #e8118bbf;
     font-weight: 600;
 }
+
 .accordion-body ul li a {
     text-decoration: none;
     font-size: 16px;
@@ -112,9 +134,7 @@ a,p,button{
     color: #64748b;
     line-height: 25px;
 }
-.accordion-body ul {
-    padding: 0 38px;
-}
+
 .footerlist {
     text-align: right;
     padding: 3px 0;
@@ -123,6 +143,7 @@ a,p,button{
     color: #64748b;
     line-height: 25px;
 }
+
 section.footersec {
     background-color: #f1f5f9;
 }
@@ -130,6 +151,7 @@ section.footersec {
 .userform input {
     background-color: #fff;
 }
+
 .userlist h3 {
     color: #64748b;
     font-weight: 400;
@@ -137,9 +159,11 @@ section.footersec {
     line-height: 1.75rem;
     margin-bottom: 0.75rem;
 }
+
 .table {
     padding: 50px 0;
 }
+
 .usersbtn button {
     background-color: #e8118bbf;
     color: #fff;
@@ -153,6 +177,7 @@ section.footersec {
     position: relative;
     top: 33px;
 }
+
 .usersbtn a {
     background-color: #e8118bbf;
     color: #fff;
@@ -167,31 +192,38 @@ section.footersec {
     top: 33px;
     text-decoration: none;
 }
+
 .sidebar .accordion-button:not(.collapsed) {
     box-shadow: none;
-    padding: 0;
+
 }
+
 .table table thead tr th {
     color: #777;
     font-size: 14px;
     font-weight: 700;
     line-height: 20px;
 }
+
 .notifationlist ul li a svg {
     color: #64748b;
 }
+
 button#dropdown-basic {
     background-color: transparent;
     border: 0;
     color: #64748b;
     padding: 0;
 }
+
 .table .table>:not(caption)>*>* {
     padding: 15px 17px;
 }
+
 td.idno {
     color: #ea49a6 !important;
 }
+
 .table table tbody tr td {
     font-size: 14px;
     font-weight: 500;
@@ -204,6 +236,7 @@ td.idno {
     margin: 0 34px 0 0;
     border-radius: 10px;
 }
+
 .labellist input {
     height: 40px;
     color: #000;
@@ -212,6 +245,7 @@ td.idno {
     font-weight: 400;
     border: 1px solid #cbd5e1;
 }
+
 .labellist textarea {
     height: 120px;
     color: #000;
@@ -220,6 +254,7 @@ td.idno {
     font-weight: 400;
     border: 1px solid #cbd5e1;
 }
+
 .labellist select {
     height: 40px;
     color: #000;
@@ -254,7 +289,7 @@ label.upload input {
     align-items: center;
     justify-content: left;
     padding: 15px 22px;
-} 
+}
 
 
 
@@ -266,13 +301,18 @@ label.upload input {
     font-weight: 600;
     line-height: 25px;
 }
+
 .btnlist {
     display: flex;
     justify-content: end;
     margin: 27px 0;
 }
+
 .btnlist button {
     margin: 0 13px;
+}
+
+button.create {
     background-color: #e8118bbf;
     border: 0;
     color: #fff;
@@ -287,6 +327,7 @@ label.upload input {
     height: auto;
     margin: 1px 10px 0 0;
 }
+
 .labellist1 {
     display: flex;
     margin: 10px 0;
@@ -302,9 +343,11 @@ label.headbody {
     font-size: 14px;
     border: 1px solid #64748b;
 }
+
 label.headbody.TITLE {
     border-top-left-radius: 10px;
 }
+
 label.headbody.LINK {
     border-top-right-radius: 10px;
 }
@@ -318,14 +361,16 @@ label.headbody.LINK {
     font-weight: 600;
     font-size: 15px;
 }
+
 #socaillinksadd i {
     margin: 0 5px;
 }
 
-.fieldinput.TITLE input{
+.fieldinput.TITLE input {
     border-radius: 0px 0 0px 0px;
 }
-.fieldinput.LINK input{
+
+.fieldinput.LINK input {
     border-radius: 0px 0px 0px 0px;
 }
 
@@ -343,14 +388,17 @@ button#socaillinksremove {
     background-color: transparent;
     color: #ea49a6;
 }
+
 .labellist.socailbody {
     position: relative;
 }
+
 .socaillinksremove {
     position: absolute;
     top: 37%;
     right: -10%;
 }
+
 .sidebar .accordion-header {
     color: #64748b;
     margin-bottom: 0;
@@ -362,6 +410,7 @@ button#socaillinksremove {
 .loginform {
     padding: 150px 0 150px;
 }
+
 .logininput label {
     color: #000;
     font-size: 15px;
@@ -369,14 +418,17 @@ button#socaillinksremove {
     font-weight: 400;
     margin: 9px 0;
 }
+
 .logininput input[type="checkbox"] {
     margin: 16px 4px 12px 0;
 }
+
 .loginbtn {
     display: flex;
     align-items: center;
     justify-content: end;
 }
+
 .loginbtn a {
     color: #000;
     text-decoration: underline;
@@ -385,6 +437,7 @@ button#socaillinksremove {
     font-weight: 400;
     margin: 0 21px;
 }
+
 .loginbtn button {
     background-color: #ec4899;
     border: 0;
@@ -395,6 +448,7 @@ button#socaillinksremove {
     padding: 8px 32px;
     border-radius: 5px;
 }
+
 .loginform {
     background-color: #fff;
     box-sizing: border-box;
@@ -407,6 +461,7 @@ button#socaillinksremove {
     height: 100vh;
     padding: 130px 0 150px;
 }
+
 .loginsec h3 {
     text-align: center;
     color: #ec4899;
@@ -414,3 +469,197 @@ button#socaillinksremove {
     line-height: 55px;
     font-weight: 600;
 }
+
+
+/* detail css start */
+
+.detaillist h5 {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 25px;
+}
+
+.detaillist {
+    border-bottom: 1px solid #64748b2b;
+}
+
+.detaillist {
+    border-bottom: 1px solid #64748b2b;
+    padding: 11px 0 0px 0;
+}
+
+.detaillist p {
+    color: #64748b;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+.detaillist strong {
+    color: #64748b;
+}
+
+.imgbox img {
+    width: 45%;
+}
+
+.imgbox button {
+    border: 0;
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: 400;
+    color: #64748b;
+    line-height: 25px;
+}
+
+.imgbox button i {
+    margin: 0 3px;
+}
+
+/* detail css end */
+
+
+/* workout details css */
+.updatedelete ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    float: right;
+    margin: 0 32px;
+}
+
+.updatedelete ul li {
+    margin: 0 8px;
+}
+
+.updatedelete ul li a i {
+    color: #64748b;
+}
+
+.addExersise button {
+    background-color: #e8118bbf;
+    border: 0;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    float: right;
+}
+
+.logotext {
+    width: 17%;
+    margin: auto;
+  }
+  
+  .logo-image {
+    width: 100%; /* Ensure the image fills the entire width of its container */
+  }
+
+.inputlist input {
+    border: 0;
+    background-color: transparent;
+    color: #64748b;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+.inputlist input:focus {
+    box-shadow: none;
+}
+
+.accordion-body ul {
+    padding: 0px 18px;
+}
+
+/* workout details end */
+
+
+
+
+/* Loader.css */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(223, 156, 203, 0.5);
+    /* semi-transparent background */
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    /* Light grey */
+    border-top: 8px solid #f35bda;
+    /* Blue */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+.loader-text {
+    margin-top: 10px;
+    color: white;
+    /* Change text color as needed */
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* new css satrt */
+.attachcoach i {
+    font-size: 60px;
+    margin: 2% auto;
+    display: table;
+    color: #64748b;
+}
+.attachcoach p {
+    font-size: 14px;
+    font-weight: 500;
+    color: #64748b;
+    text-align: center;
+}
+.attachcoach a {
+    background-color: transparent;
+    color: #e8118bbf;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 800;
+    border: 0;
+    padding: 8px 17px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: 3px solid #e8118bbf;
+    margin: 0 auto;
+    display: table;
+}
+.newlabel small {
+    margin: 10px;
+}
+.newlabel input {
+    width: 30%;
+}
+.newlabel1 input {
+    width: 55% !important;
+}
+.newlabel1s small {
+    margin: 0 20px;
+}
+/* new css end */

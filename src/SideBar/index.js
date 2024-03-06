@@ -14,7 +14,7 @@ const SideBar = () => {
   const handleLogout = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://appsdemo.pro/Pawherfit/user/logout', {
+      const response = await fetch('https://appsdemo.pro/Pawherfit/user/logout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const SideBar = () => {
         <div className="row">
           <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
             <div className="logotext">
-              <h2>Logo Here</h2>
+              <img src="https://i.ibb.co/7v1r0QD/download.png" className="logo-image" />
             </div>
           </div>
           <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">

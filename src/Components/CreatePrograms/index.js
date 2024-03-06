@@ -44,8 +44,6 @@ const CreatePrograms = () => {
    };
    const handleProgramImageChange = (e) => {
       const file = e.target.files[0];
-
-       
       setImage(file);
       // return
    };
@@ -67,14 +65,13 @@ const CreatePrograms = () => {
          formData.append('programImage',  image);
 
          try {
-            const response = await axios.post('http://appsdemo.pro/Pawherfit/method-exercise/add-program', formData, {
+            const response = await axios.post('https://appsdemo.pro/Pawherfit/method-exercise/add-program', formData, {
                headers: {
                   'Content-Type': 'multipart/form-data',
                   'Authorization': `Bearer ${token}`
                },
             });
             console.log('Form submitted successfully:', response.data);
-
             // Reset form after successful submission if needed
             setTitle('');
             setDescription('');
@@ -108,7 +105,6 @@ const CreatePrograms = () => {
                         <div className="row align-items-center">
                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
                               <h3>Create Program</h3>
-
                            </div>
                         </div>
                      </div>

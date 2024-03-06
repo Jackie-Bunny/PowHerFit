@@ -26,7 +26,7 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://appsdemo.pro/Pawherfit/user/login', {
+      const response = await fetch('https://appsdemo.pro/Pawherfit/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
