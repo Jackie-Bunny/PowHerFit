@@ -61,7 +61,7 @@ const SideNav = () => {
                                     </h2>
                                     <div
                                         id="collapseThree"
-                                        className="accordion-collapse collapse "
+                                        className="accordion-collapse collapse show"
                                         aria-labelledby="headingThree"
                                         data-bs-parent="#accordionExample"
                                     >
@@ -125,7 +125,7 @@ const SideNav = () => {
                                     </h2>
                                     <div
                                         id="collapseFour"
-                                        className="accordion-collapse collapse "
+                                        className="accordion-collapse collapse show"
                                         aria-labelledby="headingFour"
                                         data-bs-parent="#accordionExample"
                                     >
@@ -162,7 +162,7 @@ const SideNav = () => {
                                     </h2>
                                     <div
                                         id="collapseFive"
-                                        className="accordion-collapse collapse "
+                                        className="accordion-collapse collapse show"
                                         aria-labelledby="headingFive"
                                         data-bs-parent="#accordionExample"
                                     >
