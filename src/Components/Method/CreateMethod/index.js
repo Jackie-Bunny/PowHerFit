@@ -1,12 +1,56 @@
-import React from "react";
+import React, { useState } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from "../../../SideBar";
 import SideNav from "../../SideNav";
 
-
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 
 const CreateMethod = () => {
+
+    const userData = useSelector(state => state.data.data);
+    const token = userData.token;
+
+    // State variables initialization
+    const [methodName, setmethodName] = useState('');
+    const [methodDetail, setmethodDetail] = useState('');
+
+    // onChange handlers for input fields
+    const handleTitleChange = (e) => setmethodName(e.target.value);
+    const handleDescriptionChange = (e) => setmethodDetail(e.target.value);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        let data = JSON.stringify({
+            "methodName": methodName,
+            "methodDetail": methodDetail
+        });
+
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: 'http://appsdemo.pro/Pawherfit/method-exercise/add-method',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            data: data
+        };
+
+        axios.request(config)
+            .then((response) => {
+                console.log('Method Form submitted successfully:', JSON.stringify(response.data));
+                setmethodName('');
+                setmethodDetail('');
+                window.location.href = '/Method';
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
 
@@ -25,9 +69,8 @@ const CreateMethod = () => {
                                     </div>
                                 </div>
                             </div>
-
                             <div className="createprogrameformbox">
-                                <form action="javascript:;">
+                                <form onSubmit={handleSubmit}>
                                     <div className="row">
                                         <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                                             <div className="labellist">
@@ -36,7 +79,7 @@ const CreateMethod = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="text" className="form-control" placeholder="Method" />
+                                                <input type="text" className="form-control" name="methodName" onChange={handleTitleChange} value={methodName} placeholder="Method" />
                                             </div>
                                         </div>
                                     </div>
@@ -49,7 +92,7 @@ const CreateMethod = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <textarea placeholder="Method Description" className="form-control"></textarea>
+                                                <textarea placeholder="Method Description" name="methodDetail" onChange={handleDescriptionChange} value={methodDetail} className="form-control"></textarea>
                                             </div>
                                         </div>
                                     </div>

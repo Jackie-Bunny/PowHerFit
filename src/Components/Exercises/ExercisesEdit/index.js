@@ -1,501 +1,227 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from "../../../SideBar";
 import SideNav from "../../SideNav";
 import Footer from "../../../Footer";
 
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import Loader from '../../Loader/loader';
+import { Link, Outlet } from "react-router-dom";
+import { map } from 'fontawesome';
+import { useParams } from 'react-router-dom';
+
 
 const ExercisesEdit = () => {
-    const [selectedOption, setSelectedOption] = useState('');
-    const handleSelectChange = (event) => {
-        setSelectedOption(event.target.value);
+    const [loading, setLoading] = useState(true); // State variable to track loading state
+
+    const { id } = useParams();
+    const [methods, setMethods] = useState([]);
+    const userData = useSelector(state => state.data.data);
+    const token = userData.token;
+
+    const [exercise, setExercise] = useState({
+        title: '',
+        description: '',
+        videoUrl: '',
+        exerciseType: '',
+        location: '',
+        superset_circuit: 0, // Default value for the checkbox
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setExercise(prevExercise => ({
+            ...prevExercise,
+            [name]: value,
+        }));
     };
-    const [isChecked, setChecked] = useState(false);
-    const handleCheckboxChange = () => {
-        setChecked(!isChecked);
+
+    const handleCheckboxChange = (e) => {
+        const { name, checked } = e.target;
+        setExercise(prevExercise => ({
+            ...prevExercise,
+            [name]: checked ? 1 : 0,
+        }));
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let url = `http://appsdemo.pro/Pawherfit/method-exercise/get-exerciseId/${id}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                console.log("Response from server:", data); // Log the entire response
+                if (data.success) { // Corrected property name
+                    setExercise(data.data); // Assuming data.data contains the methods array
+                    console.log("Exercise data", data.data);
+                } else {
+                    console.error('Failed to fetch Exercise:', data.data);
+                }
+            } catch (error) {
+                console.error('Error fetching Exercises:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [id, token]);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission here
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let url = 'http://appsdemo.pro/Pawherfit/method-exercise/get-method';
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                console.log("Response from server:", data); // Log the entire response
+                if (data.succes) { // Corrected property name
+                    setMethods(data.message); // Assuming data.message contains the methods array
+                    console.log("Methods data", data.message);
+                } else {
+                    console.error('Failed to fetch Methods:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching Methods:', error);
+            }
+        };
+        fetchData();
+    }, [token]);
 
     return (
         <>
-            <SideBar></SideBar>
-            <div className="dashbordcontent">
-                <div className="container-fluid">
-                    <div className="row">
-                        <SideNav></SideNav>
-                        <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                            <div className="userlist">
-                                <div className="row align-items-center">
-                                    <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                        <h3>Create Exercises</h3>
+            {loading ? (
+                <Loader text="Loading..." /> // Show loader if loading state is true
+            ) : (
+                <>
+                    <SideBar></SideBar>
+                    <div className="dashbordcontent">
+                        <div className="container-fluid">
+                            <div className="row">
+                                <SideNav></SideNav>
+                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+                                    <div className="userlist">
+                                        <div className="row align-items-center">
+                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                <h3>Create Exercises</h3>
 
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div className="createprogrameformbox">
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <label>Title *</label>
+                                                </div>
+                                                <div className="col-8">
+                                                    <input type="text" className='form-control' name="title" value={exercise.title} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <label>Description *</label>
+                                                </div>
+                                                <div className="col-8">
+                                                    <textarea name="description" className='form-control' value={exercise.description} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <label>Video URL</label>
+                                                </div>
+                                                <div className="col-8">
+                                                    <input type="text" className='form-control' name="videoUrl" value={exercise.videoUrl} onChange={handleChange} />
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <label>Exercise Type *</label>
+                                                </div>
+                                                <div className="col-8">
+                                                    <select name="exerciseType" className='form-control' value={exercise.exerciseType} onChange={handleChange}>
+                                                        {Array.isArray(methods) ? (
+                                                            <>
+                                                                <option value="">-- Choose Method --</option>
+                                                                {methods.map(method => (
+                                                                    <option key={method._id} value={method.methodName}>{method.methodName}</option>
+                                                                ))}
+                                                            </>
+                                                        ) : (
+                                                            <option key={methods._id} value={methods.methodName}>{methods.methodName}</option>
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <label>Location</label>
+                                                </div>
+                                                <div className="col-8">
+                                                    <select name="location" className='form-control' value={exercise.location} onChange={handleChange}>
+                                                        <option value="">Choose an option</option>
+                                                        <option value="Home">Home</option>
+                                                        <option value="Gym">Gym</option>
+                                                        <option value="Both">Both</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-3">
+                                                    <label>Superset / Circuit</label>
+                                                </div>
+                                                <div className="col-8">
+                                                    <input type="checkbox" className='form-check' name="superset_circuit" checked={exercise.superset_circuit === 1} onChange={handleCheckboxChange} />
+                                                </div>
+                                            </div>
+
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+
+                                                    <div className='btnlist'>
+                                                        <button className="cancel">Cancel</button>
+                                                        <button className="create">Update & Continue Editing</button>
+                                                        <button className="create">Update Exercise</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
-
-                            <div className="createprogrameformbox">
-                                <form action="javascript:;">
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Title *</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <input type="text" className="form-control" name="title" placeholder="Title" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row prmemium align-items-center">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Description *</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <textarea placeholder="Description" name="description" className="form-control"></textarea>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Video Url</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <input type="text" className="form-control" name="Video_Url" placeholder="Video Url" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Exercise Type *</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <select class="form-select" aria-label="Default select example" className="form-select" onChange={handleSelectChange} value={selectedOption}>
-                                                    <option disabled="" value="">Choose an option</option>
-                                                    <option value="regular">Regular</option>
-                                                    <option value="amrap">AMRAP</option>
-                                                    <option value="emom">EMOM</option>
-                                                    <option value="tabata">Tabata</option>
-                                                    <option value="progressive overload">Progressive Overload</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Location </label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <select class="form-select" aria-label="Default select example">
-                                                    <option disabled="" value="">Choose an option</option>
-                                                    <option value="Home">Home</option>
-                                                    <option value="gym">Gym</option>
-                                                    <option value="emom">Home & Gym</option>
-                                                </select>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Superset / Circuit</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <input type="checkbox" name="circuit" checked={isChecked} onChange={handleCheckboxChange} />
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {selectedOption === 'regular' && (
-                                        <div className="reqular" id="regular">
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Time (s)</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="set_time" placeholder="Exersice Time" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Reps *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="reps" placeholder="Reps" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="set_reset" placeholder="Set Rest" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_rest" placeholder="Exercise Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {selectedOption === 'amrap' && (
-                                        <div className="amrap" id="amrap">
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Time (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_time" placeholder="Exersice Time" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Reps *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="reps" placeholder="Reps" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="set_reset" placeholder="Set Rest" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_rest" placeholder="Exercise Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Progressive Reps</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="checkbox" name="progressive_reps" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {selectedOption === 'emom' && (
-                                        <div className="emom" id="emom">
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Time (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_time" placeholder="Exersice Time" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="Set" placeholder="Set" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Reps *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="reps" placeholder="Reps" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_rest" placeholder="Exercise Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    )}
-                                    {selectedOption === 'tabata' && (
-                                        <div className="tabata" id="tabata">
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Time (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_time" placeholder="Exersice Time" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="Set" placeholder="Set" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="set_rest" placeholder="Set Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_rest" placeholder="Exercise Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    )}
-                                    {selectedOption === 'progressive overload' && (
-                                        <div className="reqular" id="regular">
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Time (s)</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="set_time" placeholder="Exersice Time" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Reps *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="reps" placeholder="Reps" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="set_reset" placeholder="Set Rest" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_rest" placeholder="Exercise Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )}
-                                    {isChecked && (
-                                        <div className="circuit" id="circuit">
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Set Time (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_time" placeholder="Exersice Time" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Sets *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="Sets" placeholder="Set" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                            <hr className="line" />
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                                    <div className="labellist">
-                                                        <label>Exercise Rest (s) *</label>
-                                                    </div>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                    <div className="labellist">
-                                                        <input type="number" className="form-control" name="exercise_rest" placeholder="Exercise Rest (s)" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-
-                                        </div>
-                                    )}
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-
-                                            <div className='btnlist'>
-                                                <button className="cancel">Cancel</button>
-                                                <button className="create">Update & Continue Editing</button>
-                                                <button className="create">Update Exercise</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
-
                         </div>
-                    </div>
-                </div>
 
-            </div>
-            <Footer />
+                    </div>
+                    <Footer />
+                </>
+            )}
         </>
     )
 

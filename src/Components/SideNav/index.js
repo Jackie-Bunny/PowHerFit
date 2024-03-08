@@ -79,17 +79,17 @@ const SideNav = () => {
                                                 </li>
                                                 <li>
                                                     <NavLink to="/Method" activeClassName="active">
-                                                        Method
-                                                    </NavLink>
-                                                </li>
-                                                <li>
-                                                    <NavLink to="/Workout" activeClassName="active">
-                                                        Workouts
+                                                        Methods
                                                     </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink to="/Exercises" activeClassName="active">
                                                         Exercises
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink to="/Workout" activeClassName="active">
+                                                        Workouts
                                                     </NavLink>
                                                 </li>
                                                 <li>

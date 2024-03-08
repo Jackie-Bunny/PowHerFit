@@ -1,13 +1,48 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from "../../../SideBar";
 import SideNav from "../../SideNav";
 import Footer from "../../../Footer";
 import { Link, Outlet } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const UsersDetails = () => {
+
+    const { id } = useParams();
+    const [users, setUsers] = useState([]);
+
+    const userData = useSelector(state => state.data.data);
+    const token = userData.token;
+
+    // get programs
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('https://appsdemo.pro/Pawherfit/user/get-all-users', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    setUsers(data.message);
+                    console.log("Users data",data.message);
+                } else {
+                    console.error('Failed to fetch users:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
+
+        fetchData();
+    }, [token]); // Run only once on component mount
 
     return (
         <>
@@ -30,7 +65,7 @@ const UsersDetails = () => {
                                                     <Link><i className="fa-regular fa-ellipsis"></i></Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="/Users/UsersEdit/"><i className="fa-regular fa-pen-to-square"></i></Link>
+                                                    <Link to="/Users/UsersEdit/:id"><i className="fa-regular fa-pen-to-square"></i></Link>
                                                 </li>
                                             </ul>
                                         </div>

@@ -93,7 +93,7 @@ const Users = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {users.map(user => (
+                                                {users.map((user, index) => (
                                                     <tr key={user._id}>
                                                         <td>
                                                             <div className="checklist">
@@ -102,8 +102,8 @@ const Users = () => {
                                                                 </form>
                                                             </div>
                                                         </td>
-                                                        <td className="idno">{user._id}</td>
-                                                        <td><Link to='UsersDetails'>{user.name}</Link></td>
+                                                        <td className="idno">{index + 1}</td>
+                                                        <td><Link to={`UsersDetails/${user._id}`}>{user.name}</Link></td>
                                                         <td><i class="fa-regular fa-circle-check"></i></td>
                                                         <td><i class="fa-regular fa-minus"></i></td>
                                                         <td>{user.type}</td>

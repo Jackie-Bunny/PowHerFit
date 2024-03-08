@@ -60,7 +60,6 @@ const CreateWorkOut = () => {
             .catch((error) => {
                 console.log(error);
             });
-
     };
 
     // get weeks

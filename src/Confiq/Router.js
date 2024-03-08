@@ -76,14 +76,14 @@ function AppRouter() {
                <Route path="/RecommendedCoaches/CoachEdit" element={<CoachEdit />}></Route>
                <Route path="/RecommendedPrograms" element={<RecommendedPrograms />}></Route>
 
-               <Route path="/Users/UsersDetails" element={<UsersDetails />}></Route>
-               <Route path="/Users/UsersEdit" element={<UsersEdit />}></Route>
+               <Route path="/Users/UsersDetails/:id" element={<UsersDetails />}></Route>
+               <Route path="/Users/UsersEdit/:id" element={<UsersEdit />}></Route>
                <Route path="/Users/AttachCoach" element={<AttachCoach />}></Route>
 
                <Route path="/Subscription/CreateSubscription" element={<CreateSubscription />}></Route>
 
-               <Route path="/Exercises/ExercisesDetails" element={<ExercisesDetails />}></Route>
-               <Route path="/Exercises/ExercisesEdit" element={<ExercisesEdit />}></Route>
+               <Route path="/Exercises/ExercisesDetails/:id" element={<ExercisesDetails />}></Route>
+               <Route path="/Exercises/ExercisesEdit/:id" element={<ExercisesEdit />}></Route>
 
 
             </Routes>

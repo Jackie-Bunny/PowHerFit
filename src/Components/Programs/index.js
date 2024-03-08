@@ -7,7 +7,6 @@ import SideBar from "../../SideBar";
 import { Link, Outlet } from "react-router-dom";
 import Loader from '../Loader/loader';
 
-
 import { useSelector } from 'react-redux';
 
 const Programs = () => {
@@ -34,7 +33,7 @@ const Programs = () => {
                     setPrograms(data.data);
                     console.log(data.data);
                 } else {
-                    console.error('Failed to fetch programs sdffsdfsd:', data.message);
+                    console.error('Failed to fetch programs:', data.message);
                 }
             } catch (error) {
                 console.error('Error fetching programs:', error);
