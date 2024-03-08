@@ -7,6 +7,11 @@ body {
 
 }
 
+tbody td a {
+    color: #EA49A6 !important;
+    font-weight: 700;
+}
+
 h1,
 h2,
 h3,
@@ -553,11 +558,12 @@ button#socaillinksremove {
 .logotext {
     width: 17%;
     margin: auto;
-  }
-  
-  .logo-image {
-    width: 100%; /* Ensure the image fills the entire width of its container */
-  }
+}
+
+.logo-image {
+    width: 100%;
+    /* Ensure the image fills the entire width of its container */
+}
 
 .inputlist input {
     border: 0;
@@ -630,12 +636,14 @@ button#socaillinksremove {
     display: table;
     color: #64748b;
 }
+
 .attachcoach p {
     font-size: 14px;
     font-weight: 500;
     color: #64748b;
     text-align: center;
 }
+
 .attachcoach a {
     background-color: transparent;
     color: #e8118bbf;
@@ -650,16 +658,52 @@ button#socaillinksremove {
     margin: 0 auto;
     display: table;
 }
+
 .newlabel small {
     margin: 10px;
 }
+
 .newlabel input {
     width: 30%;
 }
+
 .newlabel1 input {
     width: 55% !important;
 }
+
 .newlabel1s small {
     margin: 0 20px;
 }
+
 /* new css end */
+
+td.critrialist i {
+    margin: 3% auto 0;
+    display: table;
+    font-size: 50px;
+}
+
+td.critrialist p {
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    font-weight: 400;
+}
+
+td.critrialist a {
+    background-color: transparent;
+    color: #e8118bbf;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 800;
+    padding: 6px 27px;
+    border-radius: 6px;
+    text-decoration: none;
+    border: 3px solid #e8118bbf;
+    margin: 0 auto;
+    display: table;
+    height: 36px;
+    width: 190px;
+    display: block;
+    text-align: center;
+}

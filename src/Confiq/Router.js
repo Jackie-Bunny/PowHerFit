@@ -41,6 +41,29 @@ import CreateSubscription from "../Components/Subscription/CreateSubscription";
 import ExercisesDetails from "../Components/Exercises/ExercisesDetails";
 import ExercisesEdit from "../Components/Exercises/ExercisesEdit";
 
+import ContentPages from "../Components/ContentPages";
+import ContentPagesDetails from "../Components/ContentPages/ContentPagesDetails";
+import CreateContentPages from "../Components/ContentPages/CreateContentPages";
+import ContentPagesEdit from "../Components/ContentPages/ContentPagesEdit";
+import Nutrition from "../Components/Nutrition";
+import CreateNutrition from "../Components/Nutrition/CreateNutrition";
+import NutritionDetails from "../Components/Nutrition/NutritionDetails";
+import NutritionEdit from "../Components/Nutrition/NutritionEdit";
+
+import Course from "../Components/Course";
+import CreateCourses from "../Components/Course/CreateCourses";
+import CourseDetails from "../Components/Course/CourseDetails";
+import CoursesEdit from "../Components/Course/CoursesEdit";
+import CoursesWeek from "../Components/CoursesWeek";
+import CourseWeekDetails from "../Components/CoursesWeek/CourseWeekDetails";
+import CreateCourseWeek from "../Components/CoursesWeek/CreateCourseWeek";
+import CoursesWeekEdit from "../Components/CoursesWeek/CoursesWeekEdit/indx";
+import Quizzes from "../Components/Quizzes";
+import CreateCoursePage from "../Components/CreateCoursePage";
+import CoursePageDetails from "../Components/CreateCoursePage/CoursePageDetails";
+import CoursePageEdit from "../Components/CreateCoursePage/CoursePageEdit";
+import CreateQuiz from "../Components/Quizzes/CreateQuiz";
+
 function AppRouter() {
 
    return (
@@ -84,6 +107,29 @@ function AppRouter() {
 
                <Route path="/Exercises/ExercisesDetails/:id" element={<ExercisesDetails />}></Route>
                <Route path="/Exercises/ExercisesEdit/:id" element={<ExercisesEdit />}></Route>
+
+               <Route path ="/ContentPages" element={<ContentPages/>}></Route>
+               <Route path="/ContentPages/ContentPagesDetails" element={<ContentPagesDetails />}></Route>
+               <Route path="/ContentPages/CreateContentPages" element={<CreateContentPages />}></Route>
+               <Route path="/ContentPages/ContentPagesEdit" element={<ContentPagesEdit />}></Route>
+               <Route path="/Nutrition" element={<Nutrition />}></Route>
+               <Route path="/Nutrition/CreateNutrition" element={<CreateNutrition />}></Route>
+               <Route path="/Nutrition/NutritionDetails" element={<NutritionDetails />}></Route>
+               <Route path="/Nutrition/NutritionEdit" element={<NutritionEdit />}></Route>
+
+               <Route path="/Course" element={<Course />}></Route>
+               <Route path="/Course/CreateCourses" element={<CreateCourses />}></Route>
+               <Route path="/Course/CourseDetails" element={<CourseDetails />}></Route>
+               <Route path="/Course/CoursesEdit" element={<CoursesEdit />}></Route>
+               <Route path="/CoursesWeek" element={<CoursesWeek />}></Route>
+               <Route path="/CoursesWeek/CourseWeekDetails" element={<CourseWeekDetails />}></Route>
+               <Route path="/CoursesWeek/CreateCourseWeek" element={<CreateCourseWeek />}></Route>
+               <Route path="/CoursesWeek/CoursesWeekEdit" element={<CoursesWeekEdit />}></Route>
+               <Route path="/Quizzes" element={<Quizzes />}></Route>
+               <Route path="/CreateCoursePage" element={<CreateCoursePage />}></Route>
+               <Route path="/CreateCoursePage/CoursePageDetails" element={<CoursePageDetails />}></Route>
+               <Route path="/CreateCoursePage/CoursePageEdit" element={<CoursePageEdit />}></Route>
+               <Route path="/Quizzes/CreateQuiz" element={<CreateQuiz />}></Route>
 
 
             </Routes>

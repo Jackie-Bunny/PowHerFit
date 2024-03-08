@@ -61,7 +61,7 @@ const SideNav = () => {
                                     </h2>
                                     <div
                                         id="collapseThree"
-                                        className="accordion-collapse collapse show"
+                                        className="accordion-collapse collapse "
                                         aria-labelledby="headingThree"
                                         data-bs-parent="#accordionExample"
                                     >
@@ -102,6 +102,84 @@ const SideNav = () => {
                                                         Recommended Programs
                                                     </NavLink>
                                                 </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="accordion" id="accordionExample1">
+                                <div className="accordion-item">
+                                    <h2 className="accordion-header" id="headingFour">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFour"
+                                            aria-expanded="false"
+                                            aria-controls="collapseFour"
+                                        >
+                                            <i class="fa-regular fa-file"></i>Content
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFour"
+                                        className="accordion-collapse collapse "
+                                        aria-labelledby="headingFour"
+                                        data-bs-parent="#accordionExample"
+                                    >
+                                        <div className="accordion-body">
+                                            <ul>
+                                                <li>
+                                                    <NavLink to="/ContentPages/" activeclassname="active">
+                                                        Content Pages
+                                                    </NavLink></li>
+                                                <li>
+                                                    <NavLink to="/Nutrition/" activeclassname="active">
+                                                        Nutrition
+                                                    </NavLink></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="accordion" id="accordionExample4">
+                                <div className="accordion-item">
+                                    <h2 className="accordion-header" id="headingFive">
+                                        <button
+                                            className="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseFive"
+                                            aria-expanded="false"
+                                            aria-controls="collapseFive"
+                                        >
+                                            <i class="fa-regular fa-users"></i>Paid Content
+                                        </button>
+                                    </h2>
+                                    <div
+                                        id="collapseFive"
+                                        className="accordion-collapse collapse "
+                                        aria-labelledby="headingFive"
+                                        data-bs-parent="#accordionExample"
+                                    >
+                                        <div className="accordion-body">
+                                            <ul>
+                                                <li>
+                                                    <NavLink to="/Course" activeclassname="active">
+                                                        Courses
+                                                    </NavLink></li>
+                                                <li>
+                                                    <NavLink to="/CoursesWeek" activeclassname="active">
+                                                        Courses Week
+                                                    </NavLink></li>
+                                                <li>
+                                                    <NavLink to="/Quizzes" activeclassname="active">
+                                                        Quizzes
+                                                    </NavLink></li>
                                             </ul>
                                         </div>
                                     </div>
