@@ -30,7 +30,7 @@ const Method = () => {
                 let config = {
                     method: 'get',
                     maxBodyLength: Infinity,
-                    url: 'http://appsdemo.pro/Pawherfit/method-exercise/get-method',
+                    url: 'https://appsdemo.pro/Pawherfit/method-exercise/get-method',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }

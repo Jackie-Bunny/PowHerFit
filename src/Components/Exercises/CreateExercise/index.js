@@ -53,7 +53,7 @@ const CreateExercise = () => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://appsdemo.pro/Pawherfit/method-exercise/add-exercise',
+            url: 'https://appsdemo.pro/Pawherfit/method-exercise/add-exercise',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -73,7 +73,7 @@ const CreateExercise = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = 'http://appsdemo.pro/Pawherfit/method-exercise/get-method';
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-method';
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {

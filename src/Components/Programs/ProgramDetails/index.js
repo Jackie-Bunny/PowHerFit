@@ -48,7 +48,7 @@ const ProgramDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = 'http://appsdemo.pro/Pawherfit/method-exercise/get-week';
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-week';
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {

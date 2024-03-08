@@ -50,7 +50,7 @@ const ExercisesEdit = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = `http://appsdemo.pro/Pawherfit/method-exercise/get-exerciseId/${id}`;
+                let url = `https://appsdemo.pro/Pawherfit/method-exercise/get-exerciseId/${id}`;
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {
@@ -83,7 +83,7 @@ const ExercisesEdit = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = 'http://appsdemo.pro/Pawherfit/method-exercise/get-method';
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-method';
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {

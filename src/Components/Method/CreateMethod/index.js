@@ -32,7 +32,7 @@ const CreateMethod = () => {
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'http://appsdemo.pro/Pawherfit/method-exercise/add-method',
+            url: 'https://appsdemo.pro/Pawherfit/method-exercise/add-method',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
