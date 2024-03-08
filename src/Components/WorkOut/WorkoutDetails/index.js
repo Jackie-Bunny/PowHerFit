@@ -28,7 +28,7 @@ const WorkOutDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = 'http://appsdemo.pro/Pawherfit/method-exercise/get-workoutId';
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-workoutId';
                 // Check if ID exists in the URL
                 if (proid) {
                     url += `/${proid}`;
@@ -62,7 +62,7 @@ const WorkOutDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                let url = 'http://appsdemo.pro/Pawherfit/method-exercise/get-exercise';
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-exercise';
                 const response = await fetch(url, {
                     method: 'GET',
                     headers: {
