@@ -51,21 +51,23 @@ const CreatePrograms = () => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       if (image) {
-         const formData = new FormData();
-         formData.append('title', title);
-         formData.append('description', description);
-         formData.append('recommendedFor', recommendedFor);
-         formData.append('introVideo', introVideo);
-         formData.append('premiumCourse', premiumCourse ? 1 : 0); // Convert boolean to number
-         formData.append('appleID', appleID);
-         formData.append('IndieID', IndieID);
-         formData.append('level', Beginner);
-         formData.append('recommended', recommended ? 1 : 0); // Convert boolean to number
-         formData.append('publishStatus', Draft); // Ensure publishStatus is one of the enum values
-         formData.append('programImage', image);
-
+         const FormData = require('form-data');
+         const fdata = new FormData();
+         fdata.append('title', title);
+         fdata.append('description', description);
+         fdata.append('recommendedFor', recommendedFor);
+         fdata.append('introVideo', introVideo);
+         fdata.append('premiumCourse', premiumCourse ? 1 : 0); // Convert boolean to number
+         fdata.append('appleID', appleID);
+         fdata.append('IndieID', IndieID);
+         fdata.append('level', level);
+         fdata.append('recommended', recommended ? 1 : 0); // Convert boolean to number
+         fdata.append('publishStatus', publishStatus); // Ensure publishStatus is one of the enum values
+         fdata.append('programImage', image);
+         console.log(fdata);
+         // return
          try {
-            const response = await axios.post('https://appsdemo.pro/Pawherfit/method-exercise/add-program', formData, {
+            const response = await axios.post('https://appsdemo.pro/Pawherfit/method-exercise/add-program', fdata, {
                headers: {
                   'Content-Type': 'multipart/form-data',
                   'Authorization': `Bearer ${token}`
