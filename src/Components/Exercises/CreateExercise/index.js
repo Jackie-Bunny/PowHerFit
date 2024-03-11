@@ -63,7 +63,7 @@ const CreateExercise = () => {
         axios.request(config)
             .then((response) => {
                 console.log("Excercise added data ", JSON.stringify(response.data));
-                // window.location.href = '/Exercises';
+                window.location.href = '/Exercises';
             })
             .catch((error) => {
                 console.log(error);

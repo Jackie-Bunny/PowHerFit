@@ -62,7 +62,7 @@ const CreatePrograms = () => {
          formData.append('level', "Beginner");
          formData.append('recommended', recommended ? 1 : 0); // Convert boolean to number
          formData.append('publishStatus', 'Draft'); // Ensure publishStatus is one of the enum values
-         formData.append('programImage',  image);
+         formData.append('programImage', image);
 
          try {
             const response = await axios.post('https://appsdemo.pro/Pawherfit/method-exercise/add-program', formData, {
@@ -72,6 +72,7 @@ const CreatePrograms = () => {
                },
             });
             console.log('Form submitted successfully:', response.data);
+            window.location.href = "/Programs";
             // Reset form after successful submission if needed
             setTitle('');
             setDescription('');
@@ -261,7 +262,7 @@ const CreatePrograms = () => {
                               <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                  <div className="labellist">
                                     <select className="form-select" aria-label="Default select example" name='publishStatus' onChange={handleRecommendedChange} value={publishStatus}>
-                                       <option selected>Choose an option</option>
+                                       <option value="">Choose an option</option>
                                        <option value="Draft">Draft</option>
                                        <option value="Testing">Testing</option>
                                        <option value="Published">Published</option>
@@ -280,7 +281,7 @@ const CreatePrograms = () => {
                               <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                  <div className="labellist">
                                     <label className="upload">
-                                       <input type="file"  name="programImage" onChange={handleProgramImageChange} />
+                                       <input type="file" name="programImage" onChange={handleProgramImageChange} />
                                     </label>
                                  </div>
                               </div>
