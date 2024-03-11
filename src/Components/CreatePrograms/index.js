@@ -52,16 +52,16 @@ const CreatePrograms = () => {
       e.preventDefault();
       if (image) {
          const formData = new FormData();
-         formData.append('title', "title");
-         formData.append('description', "description");
+         formData.append('title', title);
+         formData.append('description', description);
          formData.append('recommendedFor', recommendedFor);
          formData.append('introVideo', introVideo);
          formData.append('premiumCourse', premiumCourse ? 1 : 0); // Convert boolean to number
          formData.append('appleID', appleID);
          formData.append('IndieID', IndieID);
-         formData.append('level', "Beginner");
+         formData.append('level', Beginner);
          formData.append('recommended', recommended ? 1 : 0); // Convert boolean to number
-         formData.append('publishStatus', 'Draft'); // Ensure publishStatus is one of the enum values
+         formData.append('publishStatus', Draft); // Ensure publishStatus is one of the enum values
          formData.append('programImage', image);
 
          try {
