@@ -37,7 +37,6 @@ const ExercisesDetails = () => {
                     }
                 });
                 const data = await response.json();
-                console.log("Response from server:", data); // Log the entire response
                 if (data.success) { // Corrected property name
                     setExercise(data.data); // Assuming data.data contains the methods array
                     console.log("Exercise data", data.data);

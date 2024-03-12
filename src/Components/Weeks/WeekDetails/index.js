@@ -1,16 +1,49 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from "../../../SideBar";
 import SideNav from "../../SideNav";
 import Footer from "../../../Footer";
 import { Link, Outlet } from "react-router-dom";
-
-
-
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 
 const WeeksDetails = () => {
+
+    const { id: proId } = useParams();
+    const [weekData, setWeekData] = useState([]);
+
+    const userData = useSelector(state => state.data.data);
+    const token = userData.token;
+
+    // get programs
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://appsdemo.pro/Pawherfit/method-exercise/get-weekId/${proId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    setWeekData(data.data);
+                    console.log("Week data by id", data.data);
+                } else {
+                    console.error('Failed to fetch programs:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching programs:', error);
+            }
+        };
+
+        fetchData();
+    }, [proId, token]);
+
 
     return (
 
@@ -24,7 +57,7 @@ const WeeksDetails = () => {
                             <div className="userlist">
                                 <div className="row align-items-center">
                                     <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                        <h3>Week Details: Dumbbell Only Half Hour PowHer - Week 12</h3>
+                                        <h3>Week Details: {weekData.weekTitle} - {weekData.programTitle}</h3>
 
                                     </div>
                                     <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
@@ -34,7 +67,7 @@ const WeeksDetails = () => {
                                                     <Link><i class="fa-regular fa-ellipsis"></i></Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="/Weeks/WeeksEdit"><i class="fa-regular fa-pen-to-square"></i></Link>
+                                                    <Link to={`/Weeks/WeeksEdit/${weekData._id}`}><i class="fa-regular fa-pen-to-square"></i></Link>
                                                 </li>
                                             </ul>
                                         </div>
@@ -49,7 +82,7 @@ const WeeksDetails = () => {
                                             <h5>ID</h5>
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                            <p>442</p>
+                                            <p>{weekData._id}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -59,7 +92,7 @@ const WeeksDetails = () => {
                                             <h5>Title</h5>
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                            <p>Week 12</p>
+                                            <p>{weekData.weekTitle}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -69,17 +102,26 @@ const WeeksDetails = () => {
                                             <h5>Week Image</h5>
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                            <p><i class="fa-regular fa-minus"></i></p>
+                                            <div className="imgbox">
+                                                <img src={`https://appsdemo.pro/Pawherfit/${weekData.weekImage}`} className="img-fluid" alt="Program Image" />
+                                                <br /><br />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="detaillist">
                                     <div className="row">
                                         <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                            <h5>Live?</h5>
+                                            <h5>Live ?</h5>
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                            <p><i class="fa-sharp fa-regular fa-circle-check"></i></p>
+                                            <p>
+                                                {weekData.weekLive === 0 ? (
+                                                    <i class="fa-sharp fa-regular fa-circle-check" style={{ color: 'red' }}></i>
+                                                ) : (
+                                                    <i class="fa-sharp fa-regular fa-circle-check" style={{ color: 'green' }}></i>
+                                                )}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -89,28 +131,11 @@ const WeeksDetails = () => {
                                             <h5>Program</h5>
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                            <p>Dumbbell Only Half Hour PowHer</p>
-
+                                            <p>{weekData.programTitle}</p>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             </div>
-
                         </div>
                     </div>
                     <div className="row pt-1">

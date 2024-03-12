@@ -96,7 +96,7 @@ const ProgramDetails = () => {
                                                     <Link><i class="fa-regular fa-ellipsis"></i></Link>
                                                 </li>
                                                 <li>
-                                                    <Link to="/Programs/ProgramsEdit"><i class="fa-regular fa-pen-to-square"></i></Link>
+                                                    <Link to={`/Programs/ProgramsEdit/${programs._id}`}><i class="fa-regular fa-pen-to-square"></i></Link>
                                                 </li>
                                             </ul>
                                         </div>

@@ -64,6 +64,21 @@ import CoursePageDetails from "../Components/CreateCoursePage/CoursePageDetails"
 import CoursePageEdit from "../Components/CreateCoursePage/CoursePageEdit";
 import CreateQuiz from "../Components/Quizzes/CreateQuiz";
 
+
+import Surveys from "../Components/Surveys";
+import CreateSurvey from "../Components/Surveys/CreateSurvey";
+import Payments from "../Components/Payments";
+import CreatePayments from "../Components/Payments/CreatePayments";
+import Purchases from "../Components/Purchases";
+import Subscription from "../Components/Subscription";
+import UserQuizAnswersReports from "../Components/UserQuizAnswersReports";
+import UserSurveyAnswersReports from "../Components/UserSurveyAnswersReports/";
+import CoachPaymentReports from "../Components/CoachPaymentReports";
+import CoachPaymentReportDetails from "../Components/CoachPaymentReports/CoachPaymentReportDetails";
+import Promotions from "../Components/Promotions";
+import CreatePromotion from "../Components/Promotions/CreatePromotion";
+import PromotionDetails from "../Components/Promotions/PromotionDetails";
+
 function AppRouter() {
 
    return (
@@ -88,9 +103,9 @@ function AppRouter() {
                <Route path="/Method" element={<Method />}></Route>
                <Route path="/Method/CreateMethod" element={<CreateMethod />}></Route>
                <Route path="/Programs/ProgramDetails/:id" element={<ProgramDetails />}></Route>
-               <Route path="/Programs/ProgramsEdit" element={<ProgramsEdit />}></Route>
-               <Route path="/Weeks/WeeksDetails" element={<WeeksDetails />}></Route>
-               <Route path="/Weeks/WeeksEdit" element={<WeeksEdit />}></Route>
+               <Route path="/Programs/ProgramsEdit/:id" element={<ProgramsEdit />}></Route>
+               <Route path="/Weeks/WeeksDetails/:id" element={<WeeksDetails />}></Route>
+               <Route path="/Weeks/WeeksEdit/:id" element={<WeeksEdit />}></Route>
                <Route path="/WorkOut/WorkOutDetails/:id" element={<WorkOutDetails />}></Route>
                <Route path="/WorkOut/WorkoutEdit" element={<WorkoutEdit />}></Route>
 
@@ -108,7 +123,7 @@ function AppRouter() {
                <Route path="/Exercises/ExercisesDetails/:id" element={<ExercisesDetails />}></Route>
                <Route path="/Exercises/ExercisesEdit/:id" element={<ExercisesEdit />}></Route>
 
-               <Route path ="/ContentPages" element={<ContentPages/>}></Route>
+               <Route path="/ContentPages" element={<ContentPages />}></Route>
                <Route path="/ContentPages/ContentPagesDetails" element={<ContentPagesDetails />}></Route>
                <Route path="/ContentPages/CreateContentPages" element={<CreateContentPages />}></Route>
                <Route path="/ContentPages/ContentPagesEdit" element={<ContentPagesEdit />}></Route>
@@ -130,6 +145,20 @@ function AppRouter() {
                <Route path="/CreateCoursePage/CoursePageDetails" element={<CoursePageDetails />}></Route>
                <Route path="/CreateCoursePage/CoursePageEdit" element={<CoursePageEdit />}></Route>
                <Route path="/Quizzes/CreateQuiz" element={<CreateQuiz />}></Route>
+
+               <Route path="/Surveys" element={<Surveys />}></Route>
+               <Route path="/Surveys/CreateSurvey" element={<CreateSurvey />}></Route>
+               <Route path="/Payments" element={<Payments />}></Route>
+               <Route path="/Payments/CreatePayments" element={<CreatePayments />}></Route>
+               <Route path="/Purchases" element={<Purchases />}></Route>
+               <Route path="/Subscription" element={<Subscription />}></Route>
+               <Route path="/UserQuizAnswersReports" element={<UserQuizAnswersReports />}></Route>
+               <Route path="/UserSurveyAnswersReports" element={<UserSurveyAnswersReports />}></Route>
+               <Route path="/CoachPaymentReports" element={<CoachPaymentReports />}></Route>
+               <Route path="/CoachPaymentReports/CoachPaymentReportDetails" element={<CoachPaymentReportDetails />}></Route>
+               <Route path="/Promotions" element={<Promotions />}></Route>
+               <Route path="/Promotions/CreatePromotion" element={<CreatePromotion />}></Route>
+               <Route path="/Promotions/PromotionDetails/" element={<PromotionDetails />}></Route>
 
 
             </Routes>

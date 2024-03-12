@@ -1,14 +1,80 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideNav from "../../SideNav";
 import SideBar from "../../../SideBar";
 import Footer from "../../../Footer";
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
+
 const ProgramsEdit = () => {
-    const [isChecked, setChecked] = useState(false);
-    const handleCheckboxChange = () => {
-        setChecked(!isChecked);
+    const [program, setProgram] = useState([]);
+    const [isChecked, setIsChecked] = useState(program.premiumCourse === 1);
+
+    const handleFileChange = (event) => {
+        const selectedFile = event.target.files[0]; // Get the first selected file
+        console.log(selectedFile.name); // Log the filename to the console
+        // You can perform additional actions with the selected file here
     };
+
+    const handlePremiumCourse = (e) => {
+        const { name, value, type, checked } = e.target;
+        if (type === 'checkbox') {
+            setIsChecked(checked);
+            setProgram(prevProgram => ({
+                ...prevProgram,
+                premiumCourse: checked ? 1 : 0
+            }));
+        } else {
+            setProgram(prevProgram => ({
+                ...prevProgram,
+                [name]: value
+            }));
+        }
+    };
+    const [loading, setLoading] = useState(true);
+
+
+    const userData = useSelector(state => state.data.data);
+
+    const token = userData.token;
+    const { id: proid } = useParams();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let url = '';
+                if (proid) {
+                    console.log('Program id here', proid);
+                    url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-programId';
+                    url += `/${proid}`;
+                }
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    setProgram(data.data);
+                    console.log("Program data by id here", data.data);
+                } else {
+                    console.error('Failed to fetch programs:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching programs:', error);
+            } finally {
+                setLoading(false); // Set loading state to false regardless of success or error
+            }
+        };
+
+        fetchData();
+    }, [token, proid]); // Run only once on component mount
+
     return (
         <>
             <SideBar />
@@ -20,7 +86,7 @@ const ProgramsEdit = () => {
                             <div className="userlist">
                                 <div className="row align-items-center">
                                     <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                        <h3>Update Program: Strength 1.0 - Home - Beginner</h3>
+                                        <h3>Update Program: {program.title} - {program.recommendedFor} - {program.level}</h3>
 
                                     </div>
                                 </div>
@@ -36,7 +102,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="text" className="form-control" name="title" placeholder="Title" />
+                                                <input type="text" className="form-control" name="title" value={program.title} placeholder="Title" />
                                             </div>
                                         </div>
                                     </div>
@@ -49,7 +115,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <textarea className="form-control" placeholder="Description" name="description"></textarea>
+                                                <textarea className="form-control" placeholder="Description" name="description" value={program.description}></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -62,7 +128,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <select className="form-select" aria-label="Default select example">
+                                                <select className="form-select" name='recommendedFor' value={program.recommendedFor} aria-label="Default select example">
                                                     <option selected>Choose an option</option>
                                                     <option value="Home">Home</option>
                                                     <option value="Gym">Gym</option>
@@ -81,7 +147,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="text" className="form-control" name="introduction_video" placeholder="Introduction Video" />
+                                                <input type="text" className="form-control" name="introVideo" value={program.introVideo} placeholder="Introduction Video" />
                                                 <br />
                                                 <br />
                                                 <small>Example: https://vimeo.com/123456789</small>
@@ -97,7 +163,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="checkbox" name="premium_course" checked={isChecked} onChange={handleCheckboxChange} />
+                                                <input type="checkbox" name="premiumCourse" value={program.premiumCourse} onChange={handlePremiumCourse}/>
 
                                             </div>
                                         </div>
@@ -112,7 +178,7 @@ const ProgramsEdit = () => {
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                                     <div className="labellist">
-                                                        <input type="text" className="form-control" name="Apple_id *" placeholder="Apple ID " />
+                                                        <input type="text" className="form-control" name="appleId" value={program.appleId} placeholder="Apple ID " />
                                                     </div>
                                                 </div>
                                             </div>
@@ -125,7 +191,7 @@ const ProgramsEdit = () => {
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                                     <div className="labellist">
-                                                        <input type="text" className="form-control" name="Indie_id*" placeholder="Indie ID " />
+                                                        <input type="text" className="form-control" name="IndieId" value={program.IndieId} placeholder="Indie ID " />
                                                     </div>
                                                 </div>
                                             </div>
@@ -140,7 +206,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <select className="form-select" aria-label="Default select example">
+                                                <select className="form-select" name='level' value={program.level} aria-label="Default select example">
                                                     <option selected>Choose an option</option>
                                                     <option value="Beginner">Beginner</option>
                                                     <option value="Intermediate">Intermediate</option>
@@ -159,8 +225,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="checkbox" name="recommended" />
-
+                                                <input type="checkbox" name="recommended" value={program.recommended} />
                                             </div>
                                         </div>
                                     </div>
@@ -173,8 +238,7 @@ const ProgramsEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-
-                                                <select className="form-select" aria-label="Default select example">
+                                                <select className="form-select" name='publishStatus' value={program.publishStatus} aria-label="Default select example">
                                                     <option selected>Choose an option</option>
                                                     <option value="Draft">Draft</option>
                                                     <option value="Testing">Testing</option>
@@ -194,7 +258,7 @@ const ProgramsEdit = () => {
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
                                                 <label className="upload">
-                                                    <input type="file" name="program_image_upload" />
+                                                    <input type="file" name="programImage" onChange={handleFileChange} />
                                                 </label>
                                             </div>
                                         </div>

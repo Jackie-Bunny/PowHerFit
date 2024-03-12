@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 import Loader from '../../Loader/loader';
 
 import axios from 'axios';
-import { wind } from 'fontawesome';
 
 const WorkOutDetails = () => {
     const workoutId = window.location.pathname.split('/').pop();
@@ -117,6 +116,7 @@ const WorkOutDetails = () => {
             .then((response) => {
                 console.log("Workout Submitted successfuly", JSON.stringify(response.data));
                 setExerciseId(data.data); // Assuming data.data contains the methods array
+                window.location.reload();
             })
             .catch((error) => {
                 console.log(error);
@@ -141,7 +141,6 @@ const WorkOutDetails = () => {
                 console.log("Workout builder data", builderResponse.data);
                 // return
                 setExWorkoutData(builderResponse.data);
-
             } catch (error) {
                 console.log(error);
             }
@@ -191,11 +190,11 @@ const WorkOutDetails = () => {
             "exerciseTime": exerciseTime[0], // Access the first value directly
             "exerciseRestTime": restTime[0], // Access the first value directly
         });
-        console.log("Selected exercise sets data", data,workout._id);
+        console.log("Selected exercise sets data", data, workout._id);
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `https://appsdemo.pro/Pawherfit/method-exercise/update-workout-builder/${workout._id}`,
+            url: `https://appsdemo.pro/Pawherfit/method-exercise/update-workout-builder/${exerciseId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -208,6 +207,7 @@ const WorkOutDetails = () => {
             if (response.data && response.data.success) {
                 // Assuming response.data contains the updated workout data
                 setExWorkout(response.data);
+                window.location.reload();
             } else {
                 console.error("Failed to update workout:", response.data.message);
             }
@@ -360,7 +360,6 @@ const WorkOutDetails = () => {
                                                                         <td><i className="fa-regular fa-trash"></i></td>
                                                                     </tr>
                                                                 ))}
-
                                                             </tbody>
                                                         </table>
                                                         <div className='btnlist'>

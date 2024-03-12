@@ -189,7 +189,6 @@ const CreatePrograms = () => {
                               <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                  <div className="labellist">
                                     <input type="checkbox" name="premiumCourse" value={premiumCourse} onChange={handlePremiumCourseChange} checked={isChecked} />
-
                                  </div>
                               </div>
                            </div>

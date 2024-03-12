@@ -31,7 +31,7 @@ const Programs = () => {
                 const data = await response.json();
                 if (data.success) {
                     setPrograms(data.data);
-                    console.log(data.data);
+                    console.log("Programs data here",data.data);
                 } else {
                     console.error('Failed to fetch programs:', data.message);
                 }

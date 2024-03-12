@@ -97,7 +97,7 @@ const Weeks = () => {
                                                             </div>
                                                         </td>
                                                         <td className="idno">{index + 1}</td>
-                                                        <td><Link to='WeeksDetails'>{week.weekTitle}</Link></td>
+                                                        <td><Link to={`WeeksDetails/${week._id}`}>{week.weekTitle}</Link></td>
                                                         <td><i class="fa-regular fa-circle-xmark"></i></td>
                                                         <td>{week.programTitle}</td>
                                                         <td><i class="fa-solid fa-ellipsis"></i></td>

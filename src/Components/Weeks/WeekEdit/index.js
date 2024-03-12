@@ -1,12 +1,86 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from "../../../SideBar";
 import SideNav from "../../SideNav";
 import Footer from "../../../Footer";
 
+import { Link, Outlet } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 
 const WeeksEdit = () => {
+
+    const { id: proId } = useParams();
+    const [weekData, setWeekData] = useState([]);
+    const [programs, setPrograms] = useState([]);
+
+    const userData = useSelector(state => state.data.data);
+    const token = userData.token;
+
+    const [programId, setProgramID] = useState('');
+
+    const handleProgramID = (e) => setProgramID(e.target.value);
+
+
+    const [weekImage, setImage] = useState(null);
+    const handleProgramImageChange = (e) => {
+        const file = e.target.files[0];
+        setImage(file);
+        // return
+    };
+    // get programs
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-program';
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    setPrograms(data.data);
+                    console.log("Programs data", data.data);
+                } else {
+                    console.error('Failed to fetch programs:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching programs:', error);
+            }
+        };
+        fetchData();
+    }, [token]); // Run whenever token or proid changes
+    // get week by id
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://appsdemo.pro/Pawherfit/method-exercise/get-weekId/${proId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    setWeekData(data.data);
+                    console.log("Week data by id", data.data);
+                } else {
+                    console.error('Failed to fetch programs:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching programs:', error);
+            }
+        };
+
+        fetchData();
+    }, [proId, token]);
 
     return (
 
@@ -20,7 +94,7 @@ const WeeksEdit = () => {
                             <div className="userlist">
                                 <div className="row align-items-center">
                                     <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                        <h3>Update Week: Dumbbell Only Half Hour PowHer - Week 12</h3>
+                                        <h3>Update Week: {weekData.programTitle} - {weekData.weekTitle}</h3>
 
                                     </div>
                                 </div>
@@ -36,7 +110,7 @@ const WeeksEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="text" className="form-control" name="title" placeholder="Title" />
+                                                <input type="text" className="form-control" name="weektitle" value={weekData.weekTitle} placeholder="Title" />
                                             </div>
                                         </div>
                                     </div>
@@ -50,7 +124,7 @@ const WeeksEdit = () => {
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
                                                 <label className="upload">
-                                                    <input type="file" name="program_image_upload" />
+                                                    <input type="file" name="weekImage" onChange={handleProgramImageChange} />
                                                 </label>
                                             </div>
                                         </div>
@@ -59,13 +133,12 @@ const WeeksEdit = () => {
                                     <div className="row prmemium align-items-center">
                                         <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                                             <div className="labellist">
-                                                <label>Live?</label>
+                                                <label>Live ?</label>
                                             </div>
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <input type="checkbox" name="Live" />
-
+                                                <input type="checkbox" name="weekLive" value={weekData.weekLive} />
                                             </div>
                                         </div>
                                     </div>
@@ -78,47 +151,18 @@ const WeeksEdit = () => {
                                         </div>
                                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                             <div className="labellist">
-                                                <select data-testid="programs-select" dusk="program" class="w-full block form-control form-select form-select-bordered">
-                                                    <option disabled="" value="">—</option>
-                                                    <option value="21">Advanced Nutrition 1.0</option>
-                                                    <option value="22">Bikini Body - Home - Beginner</option>
-                                                    <option value="25">Bikini Body - Gym - Advanced</option>
-                                                    <option value="24">Bikini Body - Gym - Beginner</option>
-                                                    <option value="3">Bikini Body - Gym - Intermediate</option>
-                                                    <option value="23">Bikini Body - Home - Advanced</option>
-                                                    <option value="4">Bikini Body - Home Intermediate</option>
-                                                    <option value="38">Booty + ABS - GYM - Intermediate</option>
-                                                    <option value="10">Booty + ABS - Home - Intermediate</option>
-                                                    <option value="29">Building the "X" Shape: Gym Advanced</option>
-                                                    <option value="27">Building the "X" Shape: Gym Beginner</option>
-                                                    <option value="28">Building the "X" Shape: Gym Intermediate</option>
-                                                    <option value="26">Building the "X" Shape: Home Advanced</option>
-                                                    <option value="5">Building the "X" Shape: Home Beginner</option>
-                                                    <option value="30">Building the "X" Shape: Home Intermediate</option>
-                                                    <option value="41">Dumbbell Only Half Hour PowHer</option>
-                                                    <option value="39">Half Hour PowHer</option>
-                                                    <option value="6">PostPartum HealHer - Home or Gym</option>
-                                                    <option value="34">PowHER 1.0 - Home - Advanced</option>
-                                                    <option value="7">PowHer 1.0 - Gym - Beginner</option>
-                                                    <option value="35">PowHer 1.0 - Gym - Intermediate</option>
-                                                    <option value="8">PowHer 1.0 - Home - Beginner</option>
-                                                    <option value="33">PowHer 1.0 - Home - Intermediate</option>
-                                                    <option value="32">PowHer Push - Pull Program</option>
-                                                    <option value="36">Powher 1.0 - Gym - Advanced</option>
-                                                    <option value="11">Pump Your Bump - Home or Gym</option>
-                                                    <option value="17">Strength 1.0 - GYM - Advanced</option>
-                                                    <option value="16">Strength 1.0 - GYM - Intermediate</option>
-                                                    <option value="2">Strength 1.0 - Gym - Beginner</option>
-                                                    <option value="14">Strength 1.0 - Home - Advanced</option>
-                                                    <option value="1">Strength 1.0 - Home - Beginner</option>
-                                                    <option value="15">Strength 1.0 - Home - Intermediate</option>
-                                                    <option value="31">Strength 2.0 Gym - Advanced</option>
-                                                    <option value="12">Strength 2.0 Gym - Intermediate</option>
-                                                    <option value="18">TEST - LAURA - Program</option>
-                                                    <option value="37">Tabata 4 Week</option>
-                                                    <option value="13">ZERO EQUIPMENT Anywhere Program</option>
+                                                <select data-testid="programs-select" dusk="program" name='programId' onChange={handleProgramID} value={weekData.programId} className="w-full block form-control form-select form-select-bordered">
+                                                    {Array.isArray(programs) ? (
+                                                        <>
+                                                            <option value="">— Select a Program —</option>
+                                                            {programs.map(program => (
+                                                                <option key={program._id} value={program._id}>{program.title}</option>
+                                                            ))}
+                                                        </>
+                                                    ) : (
+                                                        <option key={programs._id} value={programs._id}>{programs.title}</option>
+                                                    )}
                                                 </select>
-
                                             </div>
                                         </div>
                                     </div>
