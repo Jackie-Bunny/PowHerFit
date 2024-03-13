@@ -10,11 +10,15 @@ import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Loader from '../../Loader/loader';
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 import axios from 'axios';
 
 const WorkOutDetails = () => {
     const workoutId = window.location.pathname.split('/').pop();
-    console.log(workoutId);
+    // console.log(workoutId);
     const [loading, setLoading] = useState(true); // State variable to track loading state
 
     const { id: proid } = useParams();
@@ -123,100 +127,130 @@ const WorkOutDetails = () => {
             });
     };
 
-    // get exercise with workoutbuilder
+    // get exercises workouts
     const [exerciseWorkoutData, setExWorkoutData] = useState(null);
+    const [sets, setSets] = useState([]);
+    const [reps, setReps] = useState([]);
+    const [exerciseTime, setExerciseTime] = useState([]);
+    const [restTime, setRestTime] = useState([]);
+
+    // console.log("setSets", sets)
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const config = {
                     method: 'get',
-                    maxBodyLength: Infinity,
                     url: `https://appsdemo.pro/Pawherfit/method-exercise/allExercise-workoutId/${workoutId}`,
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
                 };
-                const builderResponse = await axios.request(config);
-                console.log("Workout builder data", builderResponse.data);
-                // return
-                setExWorkoutData(builderResponse.data);
+                const response = await axios.request(config);
+                setExWorkoutData(response.data);
+                console.log('Workout exercise data', response.data);
+                if (response.data) {
+                    const temp = []
+                    response.data.data.map((item, index) => {
+                        temp.push({ index: index, sets: item.exerciseSets })
+                    })
+                    setSets(temp)
+                    const tempRestTime = []
+                    response.data.data.map((item, index) => {
+                        tempRestTime.push({ index: index, exerciseRestTime: item.exerciseRestTime })
+                    })
+                    setRestTime(tempRestTime)
+                    const tempExerciseReps = []
+                    response.data.data.map((item, index) => {
+                        tempExerciseReps.push({ index: index, reps: item.exerciseReps })
+                    })
+                    setReps(tempExerciseReps)
+                    const tempExerciseTime = []
+                    response.data.data.map((item, index) => {
+                        tempExerciseTime.push({ index: index, exerciseTime: item.exerciseTime })
+                    })
+                    setExerciseTime(tempExerciseTime)
+                }
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
-    }, [token]);
+    }, [workoutId, token]);
 
-
-    // update workout sets reps
-    const [exWorkouts, setExWorkout] = useState();
-
-    const [sets, setSets] = useState([0]); // Initialize as an array
-    const [reps, setReps] = useState([0]); // Initialize as an array
-    const [exerciseTime, setExerciseTime] = useState([0]); // Initialize as an array
-    const [restTime, setRestTime] = useState([0]); // Initialize as an array
-
+    // Update handlers
     const handleSetsChange = (e, index) => {
-        const newSets = [...sets]; // Create a copy of the sets array
-        newSets[index] = e.target.value; // Update the value at the specified index
-        setSets(newSets); // Update the sets state with the new array
+        const newData = [...sets];
+        const updatedObject = { ...newData[index], sets: e.target.value };
+        newData[index] = updatedObject;
+        setSets(newData);
     };
-
     const handleRepsChange = (e, index) => {
-        const newReps = [...reps]; // Create a copy of the reps array
-        newReps[index] = e.target.value; // Update the value at the specified index
-        setReps(newReps); // Update the reps state variable with the new array
+        const newData = [...reps];
+        const updatedObject = { ...newData[index], reps: e.target.value };
+        newData[index] = updatedObject;
+        setReps(newData);
     };
-
     const handleExTimeChange = (e, index) => {
-        const newExerciseTime = [...exerciseTime]; // Create a copy of the exerciseTime array
-        newExerciseTime[index] = e.target.value; // Update the value at the specified index
-        setExerciseTime(newExerciseTime); // Update the exerciseTime state variable with the new array
-    };
+        const newData = [...exerciseTime];
 
+        // Find the object with the specified index and update its 'sets' value
+        const updatedObject = { ...newData[index], exerciseTime: e.target.value };
+        newData[index] = updatedObject;
+
+        // Update the state with the modified array
+        setExerciseTime(newData);
+    };
     const handleRestTimeChange = (e, index) => {
-        const newRestTime = [...restTime]; // Create a copy of the restTime array
-        newRestTime[index] = e.target.value; // Update the value at the specified index
-        setRestTime(newRestTime); // Update the restTime state variable with the new array
+        const newData = [...restTime];
+        const updatedObject = { ...newData[index], exerciseRestTime: e.target.value };
+        newData[index] = updatedObject;
+        setRestTime(newData);
     };
-
-
-    const updateWorkout = async (e) => {
-        e.preventDefault();
-        let data = JSON.stringify({
-            "exerciseSets": sets[0], // Access the first value directly
-            "exerciseReps": reps[0], // Access the first value directly
-            "exerciseTime": exerciseTime[0], // Access the first value directly
-            "exerciseRestTime": restTime[0], // Access the first value directly
-        });
-        console.log("Selected exercise sets data", data, workout._id);
-        return
-        let config = {
-            method: 'post',
-            maxBodyLength: Infinity,
-            url: `https://appsdemo.pro/Pawherfit/method-exercise/update-workout-builder/${workout.exerciseId}`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            data: data
-        };
+    // Update workout function
+    const updateWorkout = async (index, e,) => {
+        const exercise_ID = exerciseWorkoutData.data[index].exerciseId
         try {
-            const response = await axios.request(config);
-            console.log("Workout updated successfully", response.data);
-            if (response.data && response.data.success) {
-                // Assuming response.data contains the updated workout data
-                setExWorkout(response.data);
-                window.location.reload();
-            } else {
-                console.error("Failed to update workout:", response.data.message);
-            }
-            // window.location.href = "/WorkOut";
+            let data = JSON.stringify({
+                "exerciseSets": sets[index]?.sets,
+                "exerciseReps": reps[index]?.reps,
+                "exerciseTime": exerciseTime[index]?.exerciseTime,
+                "exerciseRestTime": restTime[index]?.exerciseRestTime
+            });
+
+            console.log("ezxersize aopi data", data, "ex id", exercise_ID, token)
+
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: `https://appsdemo.pro/Pawherfit/method-exercise/update-workout-builder/${exercise_ID}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                data: data
+            };
+            axios.request(config)
+                .then((response) => {
+                    console.log(JSON.stringify(response.data));
+                    // Show success toast
+                    toast.success("Workout updated successfully", {
+                        position: "top-right"
+                    });
+                    window.location.reload()
+                })
+                .catch((error) => {
+                    console.log(error);
+                    toast.error("Failed to update workout", {
+                        position: "top-right"
+                    });
+                });
+
         } catch (error) {
-            console.log(error);
+
         }
     };
+
 
     return (
         <>
@@ -287,7 +321,6 @@ const WorkOutDetails = () => {
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
                                                     <p>{workout.workoutDescription}</p>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -317,7 +350,7 @@ const WorkOutDetails = () => {
                                             </form>
                                             {exerciseWorkoutData?.data && (
                                                 <div className="table">
-                                                    <form onSubmit={updateWorkout}>
+                                                    <form action='javascript::void(0);'>
                                                         <table className="table table-hover">
                                                             <thead>
                                                                 <tr>
@@ -327,40 +360,71 @@ const WorkOutDetails = () => {
                                                                     <th scope="col">Reps</th>
                                                                     <th scope="col">Exercise Time</th>
                                                                     <th scope="col">Rest Time</th>
-                                                                    <th scope="col"></th>
+                                                                    <th scope="col">Update</th>
+                                                                    <th scope="col">Delete</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                {exerciseWorkoutData.data.map((exerciseWorkoutAll, index) => (
-                                                                    <tr key={index}>
-                                                                        <td className="idno">{index + 1}</td>
-                                                                        <td>{exerciseWorkoutAll.exerciseTitle}</td>
-                                                                        {
-                                                                            console.log("All workout builder data",exerciseWorkoutAll)
-                                                                        }
-                                                                        <td>
-                                                                            <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="sets" placeholder="# of Sets" value={exerciseWorkoutAll.exerciseSets} onChange={(e) => handleSetsChange(e, index)} />
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="reps" placeholder="# of Sets" value={exerciseWorkoutAll.exerciseReps} onChange={(e) => handleRepsChange(e, index)} />
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="exercisetime" placeholder="Add Time" value={exerciseWorkoutAll.exerciseTime} onChange={(e) => handleExTimeChange(e, index)} />
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="resttime" placeholder="Add Time" value={exerciseWorkoutAll.exerciseRestTime} onChange={(e) => handleRestTimeChange(e, index)} />
-                                                                            </div>
-                                                                        </td>
-                                                                        <td><i className="fa-regular fa-trash"></i></td>
-                                                                    </tr>
-                                                                ))}
+                                                                {exerciseWorkoutData.data.map((exerciseWorkoutAll, index) => {
+                                                                    console.log("sets", sets)
+                                                                    console.log("reps", reps)
+                                                                    console.log("resttime", restTime)
+                                                                    console.log("exersisetime", exerciseTime)
+                                                                    return (
+                                                                        <tr key={index}>
+                                                                            <td className="idno">{index + 1}</td>
+                                                                            <td>{exerciseWorkoutAll.exerciseTitle}</td>
+
+                                                                            <td>
+                                                                                <div className="inputlist">
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        name="sets"
+                                                                                        placeholder="# of Sets"
+                                                                                        value={sets[index]?.sets}
+                                                                                        onChange={(e) => handleSetsChange(e, index)} />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div className="inputlist">
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        name="reps"
+                                                                                        placeholder="# of Sets"
+                                                                                        value={reps[index]?.reps}
+                                                                                        onChange={(e) => handleRepsChange(e, index)} />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div className="inputlist">
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        name="exercisetime"
+                                                                                        placeholder="Add Time"
+                                                                                        value={exerciseTime[index]?.exerciseTime}
+                                                                                        onChange={(e) => handleExTimeChange(e, index)} />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <div className="inputlist">
+                                                                                    <input
+                                                                                        type="text"
+                                                                                        className="form-control"
+                                                                                        name="resttime"
+                                                                                        placeholder="Add Time"
+                                                                                        value={restTime[index]?.exerciseRestTime}
+                                                                                        onChange={(e) => handleRestTimeChange(e, index)} />
+                                                                                </div>
+                                                                            </td>
+                                                                            <td><i onClick={() => updateWorkout(index)} className="fa-regular fa-pencil" style={{ cursor: 'pointer', color: 'blue' }}></i></td>
+                                                                            <td><i className="fa-regular fa-trash mx-3" style={{ cursor: 'pointer', color: 'red' }}></i></td>
+                                                                        </tr>
+                                                                    )
+                                                                })}
+
                                                             </tbody>
                                                         </table>
                                                         <div className='btnlist'>
@@ -370,7 +434,6 @@ const WorkOutDetails = () => {
                                                     </form>
                                                 </div>
                                             )}
-
                                         </div>
                                     </div>
                                 </div>
