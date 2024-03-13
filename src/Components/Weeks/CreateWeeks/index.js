@@ -39,9 +39,10 @@ const CreateWeeks = () => {
             formData.append('weekLive', weekLive);
             formData.append('programId', programId);
             formData.append('weekImage', weekImage);
-            // console.log(formData);
+
+            console.log("Week form data",formData);
             // return
-            try {
+            try {                
                 const response = await axios.post('https://appsdemo.pro/Pawherfit/method-exercise/add-week', formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data',

@@ -79,6 +79,8 @@ import Promotions from "../Components/Promotions";
 import CreatePromotion from "../Components/Promotions/CreatePromotion";
 import PromotionDetails from "../Components/Promotions/PromotionDetails";
 
+import Profile from "../Components/Profile";
+
 function AppRouter() {
 
    return (
@@ -87,6 +89,9 @@ function AppRouter() {
 
          <BrowserRouter>
             <Routes>
+
+               <Route path="/Profile" element={<Profile />}></Route>
+
                <Route path="/" element={<Login />}></Route>
                <Route path="/Dashboard" element={<Dashboard />}></Route>
                <Route path="/Users" element={<Users />}></Route>

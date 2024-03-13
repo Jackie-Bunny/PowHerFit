@@ -33,6 +33,15 @@ const SideBar = () => {
     }
   };
 
+  const handleProfile = async (e) => {
+    e.preventDefault();
+    try {
+      window.location.href = '/Profile';
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
   return (
     <div className="dashboardlist topHeader">
       <div className="container-fluid">
@@ -66,6 +75,8 @@ const SideBar = () => {
                       {userData ? userData.name : 'Admin'}
                     </Dropdown.Toggle>
                     <Dropdown.Menu>
+                      <Dropdown.Item onClick={handleProfile}>Profile</Dropdown.Item>
+                      <hr />
                       <Dropdown.Item onClick={handleLogout}>LogOut</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>

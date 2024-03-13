@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
-import SideBar from "../../../SideBar";
-import SideNav from "../../SideNav";
-import Footer from "../../../Footer";
+import SideBar from "../../SideBar";
+import SideNav from "../SideNav";
+import Footer from "../../Footer";
 import { Link, Outlet } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import Loader from '../../Loader/loader';
+import Loader from '../Loader/loader';
 
 
 const UsersDetails = () => {
@@ -23,7 +23,7 @@ const UsersDetails = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`https://appsdemo.pro/Pawherfit/user/get-user-by-id/${id}`, {
+                const response = await fetch(`https://appsdemo.pro/Pawherfit/user/getUser`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const UsersDetails = () => {
                 });
                 const data = await response.json();
                 if (data.success) {
-                    console.log("User data", data.data);
+                    console.log("Auth User data", data.data);
                     setUser(data.data);
                 } else {
                     console.error('Failed to fetch user data:', data.data);
@@ -61,7 +61,7 @@ const UsersDetails = () => {
                                     <div className="userlist">
                                         <div className="row align-items-center">
                                             <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                                <h3>User Details: {user.name}</h3>
+                                                <h3>Profile Details: {user.name}</h3>
                                             </div>
                                             <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                                                 <div className="updatedelete">
@@ -438,245 +438,6 @@ const UsersDetails = () => {
 
 
 
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-5">
-                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                                    <div className="userlist">
-                                        <div className="row align-items-center">
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <h3>Referrals</h3>
-                                                <form>
-                                                    <div className="formlist userform">
-                                                        <input type="text" placeholder="search" />
-                                                        <i className="fa-regular fa-magnifying-glass"></i>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <div className="usersbtn">
-                                                    <Link to="/Users/CreateUsers">Create User</Link>
-                                                    <Outlet />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table">
-                                        <table class="table table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col"></th>
-                                                    <th scope="col">ID</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Active</th>
-                                                    <th scope="col">Avatar</th>
-                                                    <th scope="col">Account Type</th>
-                                                    <th scope="col">Current Coach</th>
-                                                    <th scope="col">Default Followed Account</th>
-                                                    <th scope="col">START DATE</th>
-                                                    <th scope="col">END DATE</th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div className="checklist">
-                                                            <form><input type="checkbox" /></form>
-                                                        </div>
-                                                    </td>
-                                                    <td className="idno">5417</td>
-                                                    <td>Lindsey Wilkinson</td>
-                                                    <td><i className="fa-regular fa-circle-check"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td>Regular</td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-regular fa-circle-xmark"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-solid fa-ellipsis"></i></td>
-                                                    <td><i className="fa-regular fa-pen-to-square"></i></td>
-                                                    <td><i className="fa-regular fa-trash"></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div className="checklist">
-                                                            <form><input type="checkbox" /></form>
-                                                        </div>
-                                                    </td>
-                                                    <td className="idno">5417</td>
-                                                    <td>Lindsey Wilkinson</td>
-                                                    <td><i className="fa-regular fa-circle-check"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td>Regular</td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-regular fa-circle-xmark"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-solid fa-ellipsis"></i></td>
-                                                    <td><i className="fa-regular fa-pen-to-square"></i></td>
-                                                    <td><i className="fa-regular fa-trash"></i></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div className="checklist">
-                                                            <form><input type="checkbox" /></form>
-                                                        </div>
-                                                    </td>
-                                                    <td className="idno">5417</td>
-                                                    <td>Lindsey Wilkinson</td>
-                                                    <td><i className="fa-regular fa-circle-check"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td>Regular</td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-regular fa-circle-xmark"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-regular fa-minus"></i></td>
-                                                    <td><i className="fa-solid fa-ellipsis"></i></td>
-                                                    <td><i className="fa-regular fa-pen-to-square"></i></td>
-                                                    <td><i className="fa-regular fa-trash"></i></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-5">
-                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                                    <div className="userlist">
-                                        <div className="row align-items-center">
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <h3>Coach Assignments History</h3>
-                                                <form>
-                                                    <div className="formlist userform">
-                                                        <input type="text" placeholder="search" />
-                                                        <i className="fa-regular fa-magnifying-glass"></i>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <div className="usersbtn">
-                                                    <Link to="/Users/AttachCoach/">Attach Coach</Link>
-                                                    <Outlet />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="createprogrameformbox attachcoach pt-5 mt-5">
-                                        <div className="detaillist"></div>
-                                        <i class="fa-light fa-calendar-days"></i>
-                                        <p>No User matched the given criteria.</p>
-                                        <Link to='/Users/AttachCoach/'>Attach Coach</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-5">
-                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                                    <div className="userlist">
-                                        <div className="row align-items-center">
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <h3>Subscriptions</h3>
-                                                <form>
-                                                    <div className="formlist userform">
-                                                        <input type="text" placeholder="search" />
-                                                        <i className="fa-regular fa-magnifying-glass"></i>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <div className="usersbtn">
-                                                    <Link to="/Subscription/CreateSubscription/">Create Subscription</Link>
-                                                    <Outlet />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="createprogrameformbox attachcoach pt-5 mt-5">
-                                        <div className="detaillist"></div>
-                                        <i class="fa-light fa-calendar-days"></i>
-                                        <p>No User matched the given criteria.</p>
-                                        <Link to='/Subscription/CreateSubscription/'>Create Subscription</Link>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-5">
-                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                                    <div className="userlist">
-                                        <div className="row align-items-center">
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <h3>Purchases</h3>
-                                                <form>
-                                                    <div className="formlist userform">
-                                                        <input type="text" placeholder="search" />
-                                                        <i className="fa-regular fa-magnifying-glass"></i>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div className="createprogrameformbox attachcoach pt-5 mt-5">
-                                        <div className="detaillist"></div>
-                                        <i class="fa-light fa-calendar-days"></i>
-                                        <p>No User matched the given criteria.</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-5">
-                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                                    <div className="userlist">
-                                        <div className="row align-items-center">
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <h3>Progress</h3>
-                                                <form>
-                                                    <div className="formlist userform">
-                                                        <input type="text" placeholder="search" />
-                                                        <i className="fa-regular fa-magnifying-glass"></i>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div className="createprogrameformbox attachcoach pt-5 mt-5">
-                                        <div className="detaillist"></div>
-                                        <i class="fa-light fa-calendar-days"></i>
-                                        <p>No User matched the given criteria.</p>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row pt-5">
-                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3"></div>
-                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                                    <div className="userlist">
-                                        <div className="row align-items-center">
-                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                                <h3>Nutrition Logs</h3>
-                                                <form>
-                                                    <div className="formlist userform">
-                                                        <input type="text" placeholder="search" />
-                                                        <i className="fa-regular fa-magnifying-glass"></i>
-                                                    </div>
-                                                </form>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                    <div className="createprogrameformbox attachcoach pt-5 mt-5">
-                                        <div className="detaillist"></div>
-                                        <i class="fa-light fa-calendar-days"></i>
-                                        <p>No User matched the given criteria.</p>
 
                                     </div>
                                 </div>

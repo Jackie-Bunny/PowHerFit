@@ -32,7 +32,7 @@ const Users = () => {
                 const data = await response.json();
                 if (data.success) {
                     setUsers(data.message);
-                    console.log(data.message);
+                    console.log('Users data', data.message);
                 } else {
                     console.error('Failed to fetch users:', data.message);
                 }
@@ -93,7 +93,7 @@ const Users = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {users.map((user, index) => (
+                                                {users.filter(user => user.type !== "admin").map((user, index) => (
                                                     <tr key={user._id}>
                                                         <td>
                                                             <div className="checklist">
@@ -104,11 +104,11 @@ const Users = () => {
                                                         </td>
                                                         <td className="idno">{index + 1}</td>
                                                         <td><Link to={`UsersDetails/${user._id}`}>{user.name}</Link></td>
-                                                        <td><i class="fa-regular fa-circle-check"></i></td>
-                                                        <td><i class="fa-regular fa-minus"></i></td>
+                                                        <td><i className="fa-regular fa-circle-check"></i></td>
+                                                        <td><i className="fa-regular fa-minus"></i></td>
                                                         <td>{user.type}</td>
-                                                        <td><i class="fa-regular fa-minus"></i></td>
-                                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                                        <td><i className="fa-regular fa-minus"></i></td>
+                                                        <td><i className="fa-regular fa-circle-xmark"></i></td>
                                                     </tr>
                                                 ))}
                                             </tbody>

@@ -428,8 +428,7 @@ const WorkOutDetails = () => {
                                                             </tbody>
                                                         </table>
                                                         <div className='btnlist'>
-                                                            <button type='button' className="cancel">Cancel</button>
-                                                            <button type='submit' className="create">Add to Workout</button>
+                                                            <Link to='/WorkOut'><button type='button' className="cancel">Cancel</button></Link>
                                                         </div>
                                                     </form>
                                                 </div>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from "../../SideBar";
@@ -6,6 +7,8 @@ import SideNav from "../SideNav";
 import Footer from '../../Footer';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 
 
 
@@ -249,7 +252,7 @@ const CreatePrograms = () => {
                               </div>
                               <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                  <div className="labellist">
-                                    <input type="checkbox" name="recommended" onChange={handlePublishStatusChange} value={recommended} />
+                                    <input type="checkbox" name="recommended" onChange={handleRecommendedChange} value={recommended} />
                                  </div>
                               </div>
                            </div>
@@ -262,8 +265,8 @@ const CreatePrograms = () => {
                               </div>
                               <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                  <div className="labellist">
-                                    <select className="form-select" aria-label="Default select example" name='publishStatus' onChange={handleRecommendedChange} value={publishStatus}>
-                                       <option value="">Choose an option</option>
+                                    <select className="form-select" name='publishStatus' onChange={handlePublishStatusChange} value={publishStatus}>
+                                       <option value=''>Choose an option</option>
                                        <option value="Draft">Draft</option>
                                        <option value="Testing">Testing</option>
                                        <option value="Published">Published</option>
@@ -291,9 +294,9 @@ const CreatePrograms = () => {
                               <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
 
                                  <div className='btnlist'>
-                                    <button className="cancel">Cancel</button>
-                                    <button className="create">Create & Add Another</button>
-                                    <button className="create">Create Program</button>
+                                    <Link to="/Programs"><button type='button' className="cancel">Cancel</button></Link>
+                                    <button type='submit' className="create">Create & Add Another</button>
+                                    <button type='submit' className="create">Create Program</button>
                                  </div>
 
                               </div>
