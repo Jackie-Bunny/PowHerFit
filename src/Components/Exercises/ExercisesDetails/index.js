@@ -17,11 +17,13 @@ import { useParams } from 'react-router-dom';
 
 
 const ExercisesDetails = () => {
+    // 
 
     const [loading, setLoading] = useState(true); // State variable to track loading state
 
     const { id } = useParams();
     const [exercise, setExercise] = useState([]);
+    const [exerciseSets, setExerciseSets] = useState([]);
     const userData = useSelector(state => state.data.data);
     const token = userData.token;
 
@@ -40,6 +42,33 @@ const ExercisesDetails = () => {
                 if (data.success) { // Corrected property name
                     setExercise(data.data); // Assuming data.data contains the methods array
                     console.log("Exercise data", data.data);
+                } else {
+                    console.error('Failed to fetch Exercise:', data.data);
+                }
+            } catch (error) {
+                console.error('Error fetching Exercises:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchData();
+    }, [id, token]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let url = `https://appsdemo.pro/Pawherfit/method-exercise/get-workoutBuilder-exerciseId/${id}`;
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                if (data.success) { // Corrected property name
+                    setExerciseSets(data.data); // Assuming data.data contains the methods array
+                    console.log("Exercise workout data", data.data);
                 } else {
                     console.error('Failed to fetch Exercise:', data.data);
                 }
@@ -180,7 +209,7 @@ const ExercisesDetails = () => {
                                                     <h5>Exercise Time (s)</h5>
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>30</p>
+                                                    <p>{exerciseSets.exerciseTime}</p>
 
                                                 </div>
                                             </div>
@@ -191,7 +220,7 @@ const ExercisesDetails = () => {
                                                     <h5>Sets</h5>
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>3</p>
+                                                    <p>{exerciseSets.exerciseSets}</p>
 
                                                 </div>
                                             </div>
@@ -202,7 +231,7 @@ const ExercisesDetails = () => {
                                                     <h5>Reps</h5>
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p><i class="fa-regular fa-minus"></i></p>
+                                                    <p>{exerciseSets.exerciseReps}</p>
 
                                                 </div>
                                             </div>
@@ -213,40 +242,7 @@ const ExercisesDetails = () => {
                                                     <h5>Set Rest (s)</h5>
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>30</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Reps Per Set</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p><i class="fa-regular fa-minus"></i></p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Exercise Rest (s)</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>30</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Progressive Reps</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p><i class="fa-regular fa-circle-xmark"></i></p>
+                                                    <p>{exerciseSets.exerciseRestTime}</p>
 
                                                 </div>
                                             </div>

@@ -157,30 +157,30 @@ const WorkOutDetails = () => {
     const [exerciseTime, setExerciseTime] = useState([0]); // Initialize as an array
     const [restTime, setRestTime] = useState([0]); // Initialize as an array
 
-    // onChange handlers for input fields
     const handleSetsChange = (e, index) => {
-        const newSets = [...sets];
-        newSets[index] = e.target.value;
-        setSets(newSets);
+        const newSets = [...sets]; // Create a copy of the sets array
+        newSets[index] = e.target.value; // Update the value at the specified index
+        setSets(newSets); // Update the sets state with the new array
     };
 
     const handleRepsChange = (e, index) => {
-        const newReps = [...reps];
-        newReps[index] = e.target.value;
-        setReps(newReps);
+        const newReps = [...reps]; // Create a copy of the reps array
+        newReps[index] = e.target.value; // Update the value at the specified index
+        setReps(newReps); // Update the reps state variable with the new array
     };
 
     const handleExTimeChange = (e, index) => {
-        const newExerciseTime = [...exerciseTime];
-        newExerciseTime[index] = e.target.value;
-        setExerciseTime(newExerciseTime);
+        const newExerciseTime = [...exerciseTime]; // Create a copy of the exerciseTime array
+        newExerciseTime[index] = e.target.value; // Update the value at the specified index
+        setExerciseTime(newExerciseTime); // Update the exerciseTime state variable with the new array
     };
 
     const handleRestTimeChange = (e, index) => {
-        const newRestTime = [...restTime];
-        newRestTime[index] = e.target.value;
-        setRestTime(newRestTime);
+        const newRestTime = [...restTime]; // Create a copy of the restTime array
+        newRestTime[index] = e.target.value; // Update the value at the specified index
+        setRestTime(newRestTime); // Update the restTime state variable with the new array
     };
+
 
     const updateWorkout = async (e) => {
         e.preventDefault();
@@ -191,10 +191,11 @@ const WorkOutDetails = () => {
             "exerciseRestTime": restTime[0], // Access the first value directly
         });
         console.log("Selected exercise sets data", data, workout._id);
+        return
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: `https://appsdemo.pro/Pawherfit/method-exercise/update-workout-builder/${exerciseId}`,
+            url: `https://appsdemo.pro/Pawherfit/method-exercise/update-workout-builder/${workout.exerciseId}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -216,9 +217,6 @@ const WorkOutDetails = () => {
             console.log(error);
         }
     };
-
-
-
 
     return (
         <>
@@ -337,24 +335,27 @@ const WorkOutDetails = () => {
                                                                     <tr key={index}>
                                                                         <td className="idno">{index + 1}</td>
                                                                         <td>{exerciseWorkoutAll.exerciseTitle}</td>
+                                                                        {
+                                                                            console.log("All workout builder data",exerciseWorkoutAll)
+                                                                        }
                                                                         <td>
                                                                             <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="sets" placeholder="# of Sets" value={sets[index] !== undefined ? sets[index] : exerciseWorkoutAll.exerciseSets} onChange={(e) => handleSetsChange(e, index)} />
+                                                                                <input type="text" className="form-control" name="sets" placeholder="# of Sets" value={exerciseWorkoutAll.exerciseSets} onChange={(e) => handleSetsChange(e, index)} />
                                                                             </div>
                                                                         </td>
                                                                         <td>
                                                                             <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="reps" placeholder="# of Sets" value={reps[index] !== undefined ? reps[index] : exerciseWorkoutAll.exerciseReps} onChange={(e) => handleRepsChange(e, index)} />
+                                                                                <input type="text" className="form-control" name="reps" placeholder="# of Sets" value={exerciseWorkoutAll.exerciseReps} onChange={(e) => handleRepsChange(e, index)} />
                                                                             </div>
                                                                         </td>
                                                                         <td>
                                                                             <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="exercisetime" placeholder="Add Time" value={exerciseTime[index] !== undefined ? exerciseTime[index] : exerciseWorkoutAll.exerciseTime} onChange={(e) => handleExTimeChange(e, index)} />
+                                                                                <input type="text" className="form-control" name="exercisetime" placeholder="Add Time" value={exerciseWorkoutAll.exerciseTime} onChange={(e) => handleExTimeChange(e, index)} />
                                                                             </div>
                                                                         </td>
                                                                         <td>
                                                                             <div className="inputlist">
-                                                                                <input type="text" className="form-control" name="resttime" placeholder="Add Time" value={restTime[index] !== undefined ? restTime[index] : exerciseWorkoutAll.exerciseRestTime} onChange={(e) => handleRestTimeChange(e, index)} />
+                                                                                <input type="text" className="form-control" name="resttime" placeholder="Add Time" value={exerciseWorkoutAll.exerciseRestTime} onChange={(e) => handleRestTimeChange(e, index)} />
                                                                             </div>
                                                                         </td>
                                                                         <td><i className="fa-regular fa-trash"></i></td>
