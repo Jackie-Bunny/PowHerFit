@@ -9,6 +9,8 @@ import { Link, Outlet } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+import Vimeo from '@vimeo/player';
+
 import Loader from '../../Loader/loader';
 
 
@@ -83,6 +85,7 @@ const ProgramDetails = () => {
         downloadLink.download = programs.programImage; // Use the filename for the download
         downloadLink.click();
     };
+
     return (
         <>
             {loading ? (
@@ -174,14 +177,18 @@ const ProgramDetails = () => {
                                                 </div>
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
                                                     {programs.introVideo ? (
-                                                        <video controls>
-                                                            <source src={programs.introVideo} type="video/mp4" />
-                                                            Your browser does not support the video tag.
-                                                        </video>
+                                                        <iframe
+                                                            src={programs.introVideo}
+                                                            title="Intro Video"
+                                                            width="640"
+                                                            height="360"
+                                                            frameBorder="0"
+                                                            allowFullScreen
+                                                        ></iframe>
                                                     ) : (
                                                         <>
                                                             <strong>No Video Preview Available!</strong>
-                                                            <p>Please check the video URL</p>
+                                                            <p>Please check the video URL: {programs.introVideo}</p>
                                                         </>
                                                     )}
                                                 </div>
@@ -340,7 +347,9 @@ const ProgramDetails = () => {
                                                             </div>
                                                         </td>
                                                         <td className="idno">{index + 1}</td>
-                                                        <td>{week.weekTitle}</td>
+                                                        <td>
+                                                            <Link to={`../Weeks/WeeksDetails/${week._id}`}>{week.weekTitle}</Link>
+                                                        </td>
                                                         <td>
                                                             {week.live === 1 ? (
                                                                 <i className="fa-sharp fa-regular fa-circle-check" style={{ background: 'green' }}></i>

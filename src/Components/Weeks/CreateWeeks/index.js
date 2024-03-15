@@ -42,7 +42,7 @@ const CreateWeeks = () => {
         if (weekImage) {
             try {
                 let data = new FormData();
-                data.append('programId', proid);
+                data.append('programId', programId ? proid : proid);
                 data.append('weekTitle', weekTitle);
                 data.append('weekLive', weekLive);
                 data.append('weekImage', weekImage);
@@ -208,7 +208,6 @@ const CreateWeeks = () => {
                                                                 <option key={programs._id} value={programs._id}>{programs.title}</option>
                                                             )}
                                                         </select>
-
                                                     </div>
                                                 </div>
                                             </div>

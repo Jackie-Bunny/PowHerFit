@@ -80,6 +80,7 @@ import CreatePromotion from "../Components/Promotions/CreatePromotion";
 import PromotionDetails from "../Components/Promotions/PromotionDetails";
 
 import Profile from "../Components/Profile";
+import NotFound from "../Components/404";
 
 function AppRouter() {
 
@@ -91,6 +92,7 @@ function AppRouter() {
             <Routes>
 
                <Route path="/Profile" element={<Profile />}></Route>
+               <Route path="/NotFound" element={<NotFound />}></Route>
 
                <Route path="/" element={<Login />}></Route>
                <Route path="/Dashboard" element={<Dashboard />}></Route>
@@ -101,7 +103,8 @@ function AppRouter() {
                <Route path="/Weeks/CreateWeeks/:id" element={<CreateWeeks />} />
                <Route path="/Weeks/CreateWeeks" element={<CreateWeeks />} />
                <Route path="WorkOut" element={<WorkOut />}></Route>
-               <Route path="/WorkOut/CreateWorkOut" element={<CreateWorkOut />}></Route>
+               <Route path="/WorkOut/CreateWorkOut/:id" element={<CreateWorkOut />}></Route>
+               <Route path="/WorkOut/CreateWorkOut/" element={<CreateWorkOut />}></Route>
                <Route path="/Exercises" element={<Exercises />}></Route>
                <Route path="/Exercises/CreateExercise" element={<CreateExercise />}></Route>
                <Route path="/Users/CreateUsers" element={<CreateUsers />}></Route>
