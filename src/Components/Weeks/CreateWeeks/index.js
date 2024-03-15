@@ -7,13 +7,19 @@ import SideNav from "../../SideNav";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import Loader from '../../Loader/loader';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CreateWeeks = () => {
     const { id: proid } = useParams();
     const [programs, setPrograms] = useState([]);
     const userData = useSelector(state => state.data.data);
     const token = userData.token;
+
+    const [loading, setLoading] = useState(true); // State variable to track loading state
+
 
     // post week data
     // State variables initialization
@@ -34,30 +40,45 @@ const CreateWeeks = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (weekImage) {
-            const formData = new FormData();
-            formData.append('weekTitle', weekTitle);
-            formData.append('weekLive', weekLive);
-            formData.append('programId', programId);
-            formData.append('weekImage', weekImage);
-
-            console.log("Week form data",formData);
-            // return
-            try {                
-                const response = await axios.post('https://appsdemo.pro/Pawherfit/method-exercise/add-week', formData, {
+            try {
+                let data = new FormData();
+                data.append('programId', proid);
+                data.append('weekTitle', weekTitle);
+                data.append('weekLive', weekLive);
+                data.append('weekImage', weekImage);
+                console.log('Form data here', data);
+                // return
+                let config = {
+                    method: 'post',
+                    maxBodyLength: Infinity,
+                    url: 'https://appsdemo.pro/Pawherfit/method-exercise/add-week',
                     headers: {
-                        'Content-Type': 'multipart/form-data',
-                        'Authorization': `Bearer ${token}`
+                        'Authorization': `Bearer ${token}`,
                     },
-                });
-                console.log('Week Form submitted successfully:', response.data);
-                // Reset form after successful submission if needed
-                setTitle('');
-                setweekLive('');
-                setProgramID('');
-                setImage(null);
-                window.location.href = "/Weeks";
+                    data: data
+                };
+                axios.request(config)
+                    .then((response) => {
+                        console.log('Week Form submitted successfully:', JSON.stringify(response.data));
+                        // Reset form after successful submission if needed
+                        setTitle('');
+                        setweekLive('');
+                        setProgramID('');
+                        setImage(null);
+                        toast.success("Login successful!");
+                        // Delay redirecting to the user page by 3 seconds
+                        setTimeout(() => {
+                            window.location.href = "/Users"; // Redirect to user page after 3 seconds
+                        }, 3000); // 3000 milliseconds = 3 seconds
+                        window.location.href = "/Weeks";
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
             } catch (error) {
                 console.error('Error submitting form:', error);
+            } finally {
+                setLoading(false); // Set loading state to false regardless of success or error
             }
         } else {
             console.error('No image selected');
@@ -90,6 +111,8 @@ const CreateWeeks = () => {
                 }
             } catch (error) {
                 console.error('Error fetching programs:', error);
+            } finally {
+                setLoading(false); // Set loading state to false regardless of success or error
             }
         };
         fetchData();
@@ -98,107 +121,115 @@ const CreateWeeks = () => {
     return (
 
         <>
-            <SideBar></SideBar>
-            <div className="dashbordcontent">
-                <div className="container-fluid">
-                    <div className="row">
-                        <SideNav></SideNav>
-                        <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
-                            <div className="userlist">
-                                <div className="row align-items-center">
-                                    <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
-                                        <h3>Create Week</h3>
+            {loading ? (
+                <Loader text="Loading..." /> // Show loader if loading state is true
+            ) : (
+                <>
+                    <SideBar></SideBar>
+                    <div className="dashbordcontent">
+                        <div className="container-fluid">
+                            <div className="row">
+                                <SideNav></SideNav>
+                                <div className="col-12 col-sm-12 col-md-9 col-lg-9 col-xl-9 col-xxl-9">
+                                    <div className="userlist">
+                                        <div className="row align-items-center">
+                                            <div className="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6">
+                                                <h3>Create Week</h3>
+                                            </div>
+                                        </div>
                                     </div>
+
+                                    <div className="createprogrameformbox">
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="row">
+                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                                    <div className="labellist">
+                                                        <label>Title *</label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                    <div className="labellist">
+                                                        <input type="text" className="form-control" name="weekTitle" onChange={handleTitleChange} value={weekTitle} placeholder="Title" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                                    <div className="labellist">
+                                                        <label>Program Image</label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                    <div className="labellist">
+                                                        <label className="upload">
+                                                            <input type="file" name="weekImage" onChange={handleProgramImageChange} />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row prmemium align-items-center">
+                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                                    <div className="labellist">
+                                                        <label>Live ?</label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                    <div className="labellist">
+                                                        <input type="checkbox" name="weekLive" onChange={handleWeekLive} value={weekLive} />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr className="line" />
+                                            <div className="row">
+                                                <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
+                                                    <div className="labellist">
+                                                        <label>Program *</label>
+                                                    </div>
+                                                </div>
+                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                    <div className="labellist">
+                                                        <select
+                                                            name='programId'
+                                                            onInput={handleProgramID}
+                                                            value={programId}
+                                                            className="w-full block form-control form-select form-select-bordered"
+                                                        >
+                                                            {Array.isArray(programs) ? (
+                                                                <>
+                                                                    <option value="">— Select a Program —</option>
+                                                                    {programs.map(program => (
+                                                                        <option key={program._id} value={program._id}>{program.title}</option>
+                                                                    ))}
+                                                                </>
+                                                            ) : (
+                                                                <option key={programs._id} value={programs._id}>{programs.title}</option>
+                                                            )}
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                                    <div className='btnlist'>
+                                                        <button className="cancel">Cancel</button>
+                                                        <button type='submit' className="create">Create & Add Another</button>
+                                                        <button type='submit' className="create">Create Weeks</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </div>
                             </div>
-
-                            <div className="createprogrameformbox">
-                                <form onSubmit={handleSubmit}>
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Title *</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <input type="text" className="form-control" name="weekTitle" onChange={handleTitleChange} value={weekTitle} placeholder="Title" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Program Image</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <label className="upload">
-                                                    <input type="file" name="weekImage" onChange={handleProgramImageChange} />
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row prmemium align-items-center">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Live ?</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <input type="checkbox" name="weekLive" onChange={handleWeekLive} value={weekLive} />
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr className="line" />
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
-                                            <div className="labellist">
-                                                <label>Program *</label>
-                                            </div>
-                                        </div>
-                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
-                                            <div className="labellist">
-                                                <select data-testid="programs-select" dusk="program" name='programId' onChange={handleProgramID} value={programId} className="w-full block form-control form-select form-select-bordered">
-                                                    {Array.isArray(programs) ? (
-                                                        <>
-                                                            <option value="">— Select a Program —</option>
-                                                            {programs.map(program => (
-                                                                <option key={program._id} value={program._id}>{program.title}</option>
-                                                            ))}
-                                                        </>
-                                                    ) : (
-                                                        <option key={programs._id} value={programs._id}>{programs.title}</option>
-                                                    )}
-
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                                            <div className='btnlist'>
-                                                <button className="cancel">Cancel</button>
-                                                <button type='submit' className="create">Create & Add Another</button>
-                                                <button type='submit' className="create">Create Weeks</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-
                         </div>
                     </div>
-                </div>
-            </div>
-
-
-
+                </>
+            )}
         </>
 
 

@@ -11,7 +11,7 @@ export const CurrentLogin = createAsyncThunk(
      console.log("reduxxxxxxxxxxx", config) //config
   }
 )
-
+ 
 export const counterSlice = createSlice({
   name: 'auth',
   initialState,
