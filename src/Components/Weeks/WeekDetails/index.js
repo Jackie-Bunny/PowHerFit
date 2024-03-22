@@ -152,7 +152,7 @@ const WeeksDetails = () => {
                                                 <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
                                                     <p>
                                                         {weekData.weekLive === 0 ? (
-                                                            <i class="fa-sharp fa-regular fa-circle-check" style={{ color: 'red' }}></i>
+                                                            <i class="fa-sharp fa-regular fa-circle-xmark" style={{ color: 'red' }}></i>
                                                         ) : (
                                                             <i class="fa-sharp fa-regular fa-circle-check" style={{ color: 'green' }}></i>
                                                         )}
@@ -224,7 +224,7 @@ const WeeksDetails = () => {
                                                             <td>{workout.weekTitle}</td>
                                                             <td></td>
                                                             <td><i class="fa-solid fa-ellipsis"></i></td>
-                                                            <td><i class="fa-regular fa-eye"></i></td>
+                                                            <td><Link to={`/WorkOut/WorkOutDetails/${workout._id}`}><i class="fa-regular fa-eye"></i></Link></td>
                                                             <td></td>
 
                                                         </tr>

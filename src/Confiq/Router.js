@@ -115,7 +115,7 @@ function AppRouter() {
                <Route path="/Weeks/WeeksDetails/:id" element={<WeeksDetails />}></Route>
                <Route path="/Weeks/WeeksEdit/:id" element={<WeeksEdit />}></Route>
                <Route path="/WorkOut/WorkOutDetails/:id" element={<WorkOutDetails />}></Route>
-               <Route path="/WorkOut/WorkoutEdit" element={<WorkoutEdit />}></Route>
+               <Route path="/WorkOut/WorkoutEdit/:id" element={<WorkoutEdit />}></Route>
 
                <Route path="/RecommendedCoaches" element={<RecommendedCoaches />}></Route>
                <Route path="/RecommendedCoaches/CoachDetails" element={<CoachDetails />}></Route>

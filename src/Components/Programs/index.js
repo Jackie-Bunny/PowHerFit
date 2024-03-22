@@ -31,7 +31,7 @@ const Programs = () => {
                 const data = await response.json();
                 if (data.success) {
                     setPrograms(data.data);
-                    console.log("Programs data here",data.data);
+                    console.log("Programs data here", data.data);
                 } else {
                     console.error('Failed to fetch programs:', data.message);
                 }
@@ -104,9 +104,21 @@ const Programs = () => {
                                                         <td className="idno">{index + 1}</td>
                                                         <td><Link to={`/Programs/ProgramDetails/${program._id}`}>{program.title}</Link></td>
                                                         <td>{program.recommendedFor}</td>
-                                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                                        <td>
+                                                            {program.premiumCourse == 0 ? (
+                                                                <i className="fa-regular fa-circle-xmark" style={{ 'color': 'red' }}></i>
+                                                            ) : (
+                                                                <i className="fa-regular fa-circle-check" style={{ 'color': 'green' }}></i>
+                                                            )}
+                                                        </td>
                                                         <td>Beginner</td>
-                                                        <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                                        <td>
+                                                            {program.recommended == 0 ? (
+                                                                <i className="fa-regular fa-circle-xmark" style={{ 'color': 'red' }}></i>
+                                                            ) : (
+                                                                <i className="fa-regular fa-circle-check" style={{ 'color': 'green' }}></i>
+                                                            )}
+                                                        </td>
                                                         <td>Publish</td>
                                                     </tr>
                                                 ))}

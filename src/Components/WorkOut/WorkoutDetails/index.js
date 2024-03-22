@@ -206,7 +206,7 @@ const WorkOutDetails = () => {
     };
     // Update workout function
     const updateWorkout = async (index, e,) => {
-        const exercise_ID = exerciseWorkoutData.data[index].exerciseId
+        const exercise_ID = exerciseWorkoutData.data[index]._id
         try {
             let data = JSON.stringify({
                 "exerciseSets": sets[index]?.sets,
@@ -229,11 +229,29 @@ const WorkOutDetails = () => {
             };
             axios.request(config)
                 .then((response) => {
-                    console.log("Workout builder updated data",JSON.stringify(response.data));
-                    // Show success toast
+                    console.log("Workout builder updated data", response.data);
+                    // return
+
                     toast.success("Workout updated successfully", {
                         position: "top-right"
                     });
+                    // Update the state variables after successful update
+                    const updatedExerciseData = response.data.data;
+                    const newSets = [...sets];
+                    const newReps = [...reps];
+                    const newExerciseTime = [...exerciseTime];
+                    const newRestTime = [...restTime];
+
+                    newSets[index] = { sets: updatedExerciseData.exerciseSets };
+                    newReps[index] = { reps: updatedExerciseData.exerciseReps };
+                    newExerciseTime[index] = { exerciseTime: updatedExerciseData.exerciseTime };
+                    newRestTime[index] = { exerciseRestTime: updatedExerciseData.exerciseRestTime };
+
+                    setSets(newSets);
+                    setReps(newReps);
+                    setExerciseTime(newExerciseTime);
+                    setRestTime(newRestTime);
+
                     setTimeout(() => {
                         window.location.reload()
                     }, 3000);
@@ -279,7 +297,7 @@ const WorkOutDetails = () => {
                                                                 <Link><i class="fa-regular fa-ellipsis"></i></Link>
                                                             </li>
                                                             <li>
-                                                                <Link to="/WorkOut/WorkoutEdit"><i class="fa-regular fa-pen-to-square"></i></Link>
+                                                                <Link to={`/WorkOut/WorkoutEdit/${workout._id}`}><i class="fa-regular fa-pen-to-square"></i></Link>
                                                             </li>
                                                         </ul>
                                                     </div>

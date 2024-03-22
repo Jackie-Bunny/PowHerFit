@@ -7,6 +7,7 @@ import SideNav from '../SideNav';
 import { Link, Outlet } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../Loader/loader';
+import { useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import WorkOutDetails from './WorkoutDetails';
@@ -18,7 +19,6 @@ const WorkOut = () => {
     const userData = useSelector(state => state.data.data);
     const token = userData.token;
     const [loading, setLoading] = useState(true); // State variable to track loading state
-
     // get weeks
     useEffect(() => {
         const fetchData = async () => {
@@ -90,6 +90,7 @@ const WorkOut = () => {
                                                     <th scope="col"></th>
                                                     <th scope="col"></th>
                                                     <th scope="col"></th>
+                                                    <th scope="col"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -107,9 +108,9 @@ const WorkOut = () => {
                                                         <td>{workout.weekTitle}</td>
                                                         <td></td>
                                                         <td><i class="fa-solid fa-ellipsis"></i></td>
-                                                        <td><i class="fa-regular fa-eye"></i></td>
+                                                        <td><Link to={`/WorkOut/WorkoutEdit/${workout._id}`}><i class="fa-regular fa-pencil"></i></Link></td>
+                                                        <td><Link to={`/WorkOut/WorkOutDetails/${workout._id}`}><i class="fa-regular fa-eye"></i></Link></td>
                                                         <td></td>
-
                                                     </tr>
                                                 ))}
                                             </tbody>

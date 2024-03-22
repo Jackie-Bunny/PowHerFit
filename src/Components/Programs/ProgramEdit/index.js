@@ -99,7 +99,7 @@ const ProgramsEdit = () => {
             setLoading(false); // Set loading state to false regardless of success or error
         }
     };
-    console.log("what is the intial image ?", program)
+    console.log("what is the intial program image ?", program)
     const handleProgramImageChange = (e) => {
         const file = e.target.files[0];
     };
@@ -108,9 +108,6 @@ const ProgramsEdit = () => {
     const updateProgram = async (e) => {
         e.preventDefault();
         // Check if an image is selected
-
-
-
         const formData = new FormData();
         formData.append('title', program.title);
         formData.append('description', program.description);
@@ -125,9 +122,8 @@ const ProgramsEdit = () => {
         if (program.programImage != null) {
             formData.append('programImage', program.programImage)
         }
-
-
         console.log(formData);
+        // return
         try {
             const response = await axios.post(`https://appsdemo.pro/Pawherfit/method-exercise/program-update/${program.id}`, formData, {
                 headers: {

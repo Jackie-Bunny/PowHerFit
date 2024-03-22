@@ -21,8 +21,7 @@ const CreateWeeks = () => {
     const [loading, setLoading] = useState(true); // State variable to track loading state
 
 
-    // post week data
-    // State variables initialization
+    // post week data    
     const [weekTitle, setTitle] = useState('');
     const [weekLive, setweekLive] = useState('');
     const [programId, setProgramID] = useState('');
@@ -42,11 +41,12 @@ const CreateWeeks = () => {
         if (weekImage) {
             try {
                 let data = new FormData();
-                data.append('programId', programId ? proid : proid);
+                data.append('programId', proid || programId);
                 data.append('weekTitle', weekTitle);
                 data.append('weekLive', weekLive);
                 data.append('weekImage', weekImage);
-                console.log('Form data here', data);
+
+                console.log('Form data here', data, programId, proid);
                 // return
                 let config = {
                     method: 'post',
@@ -65,12 +65,11 @@ const CreateWeeks = () => {
                         setweekLive('');
                         setProgramID('');
                         setImage(null);
-                        toast.success("Login successful!");
+                        toast.success("Week created successfully !");
                         // Delay redirecting to the user page by 3 seconds
                         setTimeout(() => {
-                            window.location.href = "/Users"; // Redirect to user page after 3 seconds
-                        }, 3000); // 3000 milliseconds = 3 seconds
-                        window.location.href = "/Weeks";
+                            window.location.href = "/Weeks";
+                        }, 2000); // 3000 milliseconds = 3 seconds
                     })
                     .catch((error) => {
                         console.log(error);

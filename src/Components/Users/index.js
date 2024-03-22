@@ -8,6 +8,8 @@ import { Link, Outlet } from "react-router-dom";
 import Footer from "../../Footer";
 import { useSelector } from 'react-redux';
 import Loader from '../Loader/loader';
+import axios from 'axios';
+
 
 
 
@@ -47,6 +49,43 @@ const Users = () => {
     }, [token]); // Run only once on component mount
 
 
+    const [searchQuery, setSearchQuery] = useState('');
+    const handleInputChange = (event) => {
+        setSearchQuery(event.target.value);
+    };
+
+    const [searchedUser, setSearchedUser] = useState([]);
+
+    useEffect(() => {
+        const searchData = async () => {
+            try {
+                let data = new FormData();
+                let config = {
+                    method: 'get',
+                    maxBodyLength: Infinity,
+                    url: `https://appsdemo.pro/Pawherfit/user/search-user?search=${searchQuery}`,
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    data: data
+                };
+                const response = await axios.request(config);
+                console.log('Search Users data', response.data);
+                setSearchedUser(response.data.data);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        if (searchQuery.trim() !== '') {
+            searchData();
+        } else {
+            setSearchedUser([]);
+        }
+    }, [searchQuery, token]);
+
+
     return (
         <>
             {loading ? (
@@ -65,8 +104,14 @@ const Users = () => {
                                                 <h3>Users</h3>
                                                 <form>
                                                     <div className="formlist userform">
-                                                        <input type="text" placeholder="Search" />
-                                                        <i class="fa-regular fa-magnifying-glass"></i>
+                                                        <input
+                                                            type="text"
+                                                            name='search'
+                                                            placeholder="Search"
+                                                            value={searchQuery}
+                                                            onChange={handleInputChange}
+                                                        />
+                                                        <i className="fa-regular fa-magnifying-glass"></i>
                                                     </div>
                                                 </form>
                                             </div>
@@ -93,24 +138,51 @@ const Users = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {users.filter(user => user.type !== "admin").map((user, index) => (
-                                                    <tr key={user._id}>
-                                                        <td>
-                                                            <div className="checklist">
-                                                                <form>
-                                                                    <input type="checkbox" />
-                                                                </form>
-                                                            </div>
-                                                        </td>
-                                                        <td className="idno">{index + 1}</td>
-                                                        <td><Link to={`UsersDetails/${user._id}`}>{user.name}</Link></td>
-                                                        <td><i className="fa-regular fa-circle-check"></i></td>
-                                                        <td><i className="fa-regular fa-minus"></i></td>
-                                                        <td>{user.type}</td>
-                                                        <td><i className="fa-regular fa-minus"></i></td>
-                                                        <td><i className="fa-regular fa-circle-xmark"></i></td>
-                                                    </tr>
-                                                ))}
+                                                {searchedUser && searchedUser.length > 0 ? (
+                                                    searchedUser.map((user, index) => (
+                                                        <tr key={user._id}>
+                                                            <td>
+                                                                <div className="checklist">
+                                                                    <form>
+                                                                        <input type="checkbox" />
+                                                                    </form>
+                                                                </div>
+                                                            </td>
+                                                            <td className="idno">{index + 1}</td>
+                                                            <td><Link to={`UsersDetails/${user._id}`}>{user.name}</Link></td>
+                                                            <td><i className="fa-regular fa-circle-check"></i></td>
+                                                            <td><i className="fa-regular fa-minus"></i></td>
+                                                            <td>{user.type}</td>
+                                                            <td><i className="fa-regular fa-minus"></i></td>
+                                                            <td><i className="fa-regular fa-circle-xmark"></i></td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    users && users.length > 0 ? (
+                                                        users.filter(user => user.type !== "admin").map((user, index) => (
+                                                            <tr key={user._id}>
+                                                                <td>
+                                                                    <div className="checklist">
+                                                                        <form>
+                                                                            <input type="checkbox" />
+                                                                        </form>
+                                                                    </div>
+                                                                </td>
+                                                                <td className="idno">{index + 1}</td>
+                                                                <td><Link to={`UsersDetails/${user._id}`}>{user.name}</Link></td>
+                                                                <td><i className="fa-regular fa-circle-check"></i></td>
+                                                                <td><i className="fa-regular fa-minus"></i></td>
+                                                                <td>{user.type}</td>
+                                                                <td><i className="fa-regular fa-minus"></i></td>
+                                                                <td><i className="fa-regular fa-circle-xmark"></i></td>
+                                                            </tr>
+                                                        ))
+                                                    ) : (
+                                                        <tr>
+                                                            <td colSpan="8">No users found</td>
+                                                        </tr>
+                                                    )
+                                                )}
                                             </tbody>
                                         </table>
                                     </div>
@@ -125,8 +197,6 @@ const Users = () => {
 
 
     )
-
-
 }
 
 
