@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { CurrentLogin, setLogin } from '../redux/reducers';
 import { ToastContainer, toast } from 'react-toastify'; // Moved to the top
-import 'react-toastify/dist/ReactToastify.css'; // Moved to the top
+import 'react-toastify/dist/ReactToastify.css'; // Moved to the top corner
 
 const Login = () => {
   const [email, setEmail] = useState('');
