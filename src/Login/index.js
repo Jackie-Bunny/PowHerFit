@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';``
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserData } from '../redux/actions';
 import { CurrentLogin, setLogin } from '../redux/reducers';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'; // Moved to the top
+import 'react-toastify/dist/ReactToastify.css'; // Moved to the top
 
 const Login = () => {
   const [email, setEmail] = useState('');
