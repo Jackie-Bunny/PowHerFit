@@ -7,12 +7,10 @@ import SideBar from "../../../SideBar";
 import SideNav from "../../SideNav";
 import Footer from "../../../Footer";
 
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
+import { useSelector } from 'react-redux';
 import Loader from '../../Loader/loader';
 
-import { Link, Outlet } from "react-router-dom";
-import { map } from 'fontawesome';
+import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 
 
@@ -67,8 +65,8 @@ const ExercisesDetails = () => {
                 });
                 const data = await response.json();
                 if (data.success) { // Corrected property name
-                    setExerciseSets(data.data); // Assuming data.data contains the methods array
                     console.log("Exercise workout data", data.data);
+                    setExerciseSets(data.data); // Assuming data.data contains the methods array
                 } else {
                     console.error('Failed to fetch Exercise:', data.data);
                 }
@@ -203,52 +201,59 @@ const ExercisesDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Exercise Time (s)</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>{exerciseSets.exerciseTime}</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Sets</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>{exerciseSets.exerciseSets}</p>
-
+                                        {exerciseSets && exerciseSets.exerciseTime && (
+                                            <div className="detaillist">
+                                                <div className="row">
+                                                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                        <h5>Exercise Time (s)</h5>
+                                                    </div>
+                                                    <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                                                        <p>{exerciseSets.exerciseTime}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Reps</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>{exerciseSets.exerciseReps}</p>
+                                        )}
+                                        {exerciseSets && exerciseSets.exerciseSets && (
+                                            <div className="detaillist">
+                                                <div className="row">
+                                                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                        <h5>Sets</h5>
+                                                    </div>
+                                                    <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                                                        <p>{exerciseSets.exerciseSets}</p>
 
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div className="detaillist">
-                                            <div className="row">
-                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
-                                                    <h5>Set Rest (s)</h5>
-                                                </div>
-                                                <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
-                                                    <p>{exerciseSets.exerciseRestTime}</p>
+                                        )}
+                                        {exerciseSets && exerciseSets.exerciseReps && (
 
+                                            <div className="detaillist">
+                                                <div className="row">
+                                                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                        <h5>Reps</h5>
+                                                    </div>
+                                                    <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                                                        <p>{exerciseSets.exerciseReps}</p>
+
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        )}
+                                        {exerciseSets && exerciseSets.exerciseRestTime && (
+                                            <div className="detaillist">
+                                                <div className="row">
+                                                    <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                        <h5>Set Rest (s)</h5>
+                                                    </div>
+                                                    <div className="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                                                        <p>{exerciseSets.exerciseRestTime}</p>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
-
                                 </div>
                             </div>
 

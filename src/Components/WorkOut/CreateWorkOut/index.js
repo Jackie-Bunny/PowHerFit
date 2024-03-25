@@ -9,8 +9,6 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 
 import Loader from '../../Loader/loader';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const CreateWorkOut = () => {
     const { id: wkId } = useParams();
