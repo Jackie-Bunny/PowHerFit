@@ -5,12 +5,9 @@ import 'bootstrap/dist/js/bootstrap.min.js';
 import SideBar from '../../SideBar';
 import SideNav from '../SideNav';
 import { Link, Outlet } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Loader from '../Loader/loader';
-import { useParams } from 'react-router-dom';
 
-import axios from 'axios';
-import WorkOutDetails from './WorkoutDetails';
 
 
 const WorkOut = () => {

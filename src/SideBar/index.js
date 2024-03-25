@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Img1 from '../Assets/Images/admin_img.jpg';
 import { setLogout } from '../redux/reducers';
