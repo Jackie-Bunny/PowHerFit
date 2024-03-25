@@ -25,7 +25,6 @@ const CreateWorkOut = () => {
     const [workoutDescription, setworkoutDescription] = useState('');
     const [weekId, setWeekId] = useState('');
     const [withDeleted, setDeleted] = useState(false);
-    console.log("Week id", wkId);
     // onChange handlers for input fields
     const handleTitleChange = (e) => setTitle(e.target.value);
     const handleDescription = (e) => setworkoutDescription(e.target.value);
@@ -34,15 +33,21 @@ const CreateWorkOut = () => {
         setDeleted(!withDeleted)
     };
 
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // Determine the value of weekId based on whether it's present in the URL or the form input
+        const selectedWeekId = wkId ? wkId : weekId;
+
         let data = JSON.stringify({
-            "weekId": weekId ? wkId : wkId,
+            "weekId": selectedWeekId,
             "workoutTitle": workoutTitle,
             "workoutDescription": workoutDescription,
             "withDeleted": withDeleted == true ? 1 : 0
         });
 
+        console.log("Slctd Week id", selectedWeekId, "Form Data", workoutTitle, workoutDescription, weekId, withDeleted);
+        // return
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
