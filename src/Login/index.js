@@ -1,11 +1,7 @@
-import React, { useState, useEffect } from 'react';``
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { setUserData } from '../redux/actions';
-import { CurrentLogin, setLogin } from '../redux/reducers';
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { CurrentLogin } from '../redux/reducers';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -40,13 +36,8 @@ const Login = () => {
       console.log('Auth user data', data);
       if (data.success) {
         dispatch(CurrentLogin(data)); // Store user data in Redux store
-        toast.success("Login successful!");
-        // Delay redirecting to the user page by 3 seconds
-        setTimeout(() => {
-          window.location.href = "/Users"; // Redirect to user page after 3 seconds
-        }, 3000); // 3000 milliseconds = 3 seconds
+        window.location.href = "/Users"; // Redirect to user page after 3 seconds
       } else {
-        toast.error(data.message);
         setEmail('');
         setPassword('');
       }

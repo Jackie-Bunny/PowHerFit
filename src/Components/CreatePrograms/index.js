@@ -8,9 +8,6 @@ import Footer from '../../Footer';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
 
 
 const CreatePrograms = () => {
@@ -78,10 +75,7 @@ const CreatePrograms = () => {
                },
             });
             console.log('Form submitted successfully:', response.data);
-            toast.success("Program added successfully !");
-            setTimeout(() => {
-               window.location.href = "/Programs";
-            }, 3000);
+            window.location.href = "/Programs";
             // Reset form after successful submission if needed
             setTitle('');
             setDescription('');
@@ -98,7 +92,6 @@ const CreatePrograms = () => {
             console.error('Error submitting form:', error);
          }
       } else {
-         toast.success("Please add some images !");
          console.error('No image selected');
       }
    };

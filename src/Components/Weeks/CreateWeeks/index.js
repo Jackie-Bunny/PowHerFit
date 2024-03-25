@@ -9,8 +9,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import Loader from '../../Loader/loader';
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const CreateWeeks = () => {
     const { id: proid } = useParams();
@@ -65,11 +63,8 @@ const CreateWeeks = () => {
                         setweekLive('');
                         setProgramID('');
                         setImage(null);
-                        toast.success("Week created successfully !");
                         // Delay redirecting to the user page by 3 seconds
-                        setTimeout(() => {
                             window.location.href = "/Weeks";
-                        }, 2000); // 3000 milliseconds = 3 seconds
                     })
                     .catch((error) => {
                         console.log(error);
