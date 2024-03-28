@@ -167,7 +167,7 @@ const ExercisesDetails = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="detaillist">
+                                        {/* <div className="detaillist">
                                             <div className="row">
                                                 <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
                                                     <h5>Exercise Type</h5>
@@ -176,7 +176,7 @@ const ExercisesDetails = () => {
                                                     <p>{exercise.exerciseType}</p>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div className="detaillist">
                                             <div className="row">
                                                 <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">

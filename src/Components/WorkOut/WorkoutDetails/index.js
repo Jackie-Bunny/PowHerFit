@@ -89,9 +89,36 @@ const WorkOutDetails = () => {
         };
         fetchData();
     }, [token]);
-
+    // get methods
+    const [methods, setMethods] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let url = 'https://appsdemo.pro/Pawherfit/method-exercise/get-method';
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                console.log("Response from server:", data); // Log the entire response
+                if (data.succes) { // Corrected property name
+                    setMethods(data.message); // Assuming data.message contains the methods array
+                    console.log("Methods data", data.message);
+                } else {
+                    console.error('Failed to fetch Methods:', data.message);
+                }
+            } catch (error) {
+                console.error('Error fetching Methods:', error);
+            }
+        };
+        fetchData();
+    }, [token]);
+    // new workout flow  => // get methods
     // attach exercise with workout 
-    const [selectedExercise, setSelectedExercise] = useState('');
+    const [methodExecisesData, setSelectedExercise] = useState('');
     const handleExerciseChange = (e) => {
         const selectedOption = e.target.options[e.target.selectedIndex];
         const selectedDataId = selectedOption.dataset.id;
@@ -100,17 +127,30 @@ const WorkOutDetails = () => {
         setExerciseId(selectedValue); // Setting value in state
     };
     const [exerciseId, setExerciseId] = useState('');
-    const addWorkout = async (e) => {
+    // add method to workout
+    const [selectedMethodData, setSelectedMethod] = useState('');
+    const [methodWorkoutData, setWorkoutData] = useState('');
+
+    const handleMethodChange = (e) => {
+        const selectedOption = e.target.options[e.target.selectedIndex];
+        const selectedDataId = selectedOption.dataset.id;
+        const selectedValue = selectedOption.value;
+        // setSelectedMethod(selectedValue); // Setting data-id in state
+        setMethodId(selectedValue); // Setting value in state
+    };
+    const [methodId, setMethodId] = useState('');
+    const addMethodToWorkout = async (e) => {
         e.preventDefault();
         let data = JSON.stringify({
-            "exerciseId": exerciseId,
+            "methodID": methodId,
             "workoutId": workout._id,
         });
-        console.log("Selected data", data);
+        console.log("Selected method data", data);
+        // return
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
-            url: 'https://appsdemo.pro/Pawherfit/method-exercise/workout-builder',
+            url: 'https://appsdemo.pro/Pawherfit/method-exercise/new-workout-builder',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
@@ -119,7 +159,36 @@ const WorkOutDetails = () => {
         };
         axios.request(config)
             .then((response) => {
-                console.log("Workout Submitted successfuly", JSON.stringify(response.data));
+                console.log("Method add to Workout successfuly", response.data);
+                setSelectedMethod(response.data.data.methodTitle); // Assuming data.data contains the methods array
+                setWorkoutData(response.data.data._id)
+                // window.location.reload();
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+    // add exercise to method and workout
+    const addExerciseToMethod = async (e) => {
+        e.preventDefault();
+        let data = JSON.stringify({
+            "exerciseId": exerciseId,
+        });
+        console.log("Selected exercise id", exerciseId, "Builder id", methodWorkoutData);
+        // return
+        let config = {
+            method: 'post',
+            maxBodyLength: Infinity,
+            url: `https://appsdemo.pro/Pawherfit/method-exercise/new-update-workout-builder/${methodWorkoutData}/${exerciseId}`,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            data: data
+        };
+        axios.request(config)
+            .then((response) => {
+                console.log("Exercise added to method successfuly", response.data);
                 setExerciseId(data.data); // Assuming data.data contains the methods array
                 window.location.reload();
             })
@@ -128,14 +197,12 @@ const WorkOutDetails = () => {
             });
     };
 
-    // get exercises workouts
+    // get exercises with methods of workouts
     const [exerciseWorkoutData, setExWorkoutData] = useState(null);
     const [sets, setSets] = useState([]);
     const [reps, setReps] = useState([]);
     const [exerciseTime, setExerciseTime] = useState([]);
     const [restTime, setRestTime] = useState([]);
-
-    // console.log("setSets", sets)
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -148,6 +215,7 @@ const WorkOutDetails = () => {
                     },
                 };
                 const response = await axios.request(config);
+                console.log("Exercise method workout data",response.data);
                 setExWorkoutData(response.data);
                 console.log('Workout exercise data', response.data);
                 if (response.data) {
@@ -348,7 +416,7 @@ const WorkOutDetails = () => {
                                         </div>
                                         <div className="userlist pt-5">
                                             <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                                                <form onSubmit={addWorkout}>
+                                                {/* <form>
                                                     <h3>Workout Builder</h3>
                                                     <div className="createprogrameformbox">
                                                         <div className="row">
@@ -368,7 +436,337 @@ const WorkOutDetails = () => {
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                </form> */}
+                                                {/* new workout flow  */}
+                                                <div className="userlist pt-5">
+                                                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                                        <h3>Workout Builder</h3>
+                                                        {!selectedMethodData && (
+                                                            <div className="createprogrameformbox" id="methodremove">
+                                                                <form onSubmit={addMethodToWorkout}>
+                                                                    <div className="row">
+                                                                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                                            <input type="text" className="form-control" placeholder="Select Exercise Method" readOnly />
+                                                                        </div>
+                                                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                                            <select class="form-select" aria-label="Default select example" name='methodId' className="form-select" onChange={handleMethodChange}>
+                                                                                <option value="">-- Choose Method --</option>
+                                                                                {methods.map(method => (
+                                                                                    <option key={method._id} value={method._id}>{method.methodName}</option>
+                                                                                ))}
+                                                                            </select>
+                                                                            <div className="addExersise pt-5">
+                                                                                <button type='submit'>Add Exercise</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        )}
+                                                        {selectedMethodData && (
+                                                            <div className="createprogrameformbox mt-5" id='excersisemethod'>
+                                                                <form onSubmit={addExerciseToMethod}>
+                                                                    <div className="row">
+                                                                        <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                                            <input type="text" className="form-control" name="methodId" placeholder="Select Exercise Method" id="Exersisemothod" value={selectedMethodData} readOnly />
+                                                                        </div>
+                                                                        <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                                            <select class="form-select" aria-label="Default select example" name="exerciseId" id="Exersiselist" onChange={handleExerciseChange}>
+                                                                                <option value="">-- Select Exercise --</option>
+                                                                                {exercises.map((exercise, index) => (
+                                                                                    <option key={index} data-id={exercise.title} value={exercise._id}>{exercise.title}</option>
+                                                                                ))}
+                                                                            </select>
+                                                                            <div className="addExersise pt-5">
+                                                                                <button type='submit'>Add to Method</button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
+                                                        )}
+                                                        <div className="createprogrameformbox mt-5" style={{ 'display': 'none' }}>
+                                                            <div className='row mb-3'>
+                                                                <div className='col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4'>
+                                                                    <div className='seriestitle'>
+                                                                        <input type='text' placeholder='Series Title' className='form-control' name='Seriestitile' id='seriestitle' readOnly />
+                                                                    </div>
+                                                                </div>
+                                                                <div className='col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4'>
+                                                                    <div className='seriestitle'>
+                                                                        <input type='text' placeholder='Enter Series Title...' className='form-control' />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className="row">
+                                                                <div className="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4 col-xxl-4">
+                                                                    <input type="text" className="form-control" name="exersise_method" placeholder="Select Exercise Method" id="Exersisemothod" readOnly />
+                                                                </div>
+                                                                <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
+                                                                    <select class="form-select" aria-label="Default select example" name="exerciseId" id="Exersiselist" onChange={handleExerciseChange}>
+                                                                        <option value="">-- Select Exercise --</option>
+                                                                        {exercises.map((exercise, index) => (
+                                                                            <option key={index} data-id={exercise.title} value={exercise._id}>{exercise.title}</option>
+                                                                        ))}
+                                                                    </select>
+                                                                    <div className="addExersise pt-5">
+                                                                        <button>Add To Series</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="table" id="showexrcise" style={{ 'display': 'none' }}>
+                                                            <table class="table table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th scope="col">ID</th>
+                                                                        <th scope="col">Title</th>
+                                                                        <th scope="col">Sets</th>
+                                                                        <th scope="col">Reps</th>
+                                                                        <th scope="col">Excersise Time</th>
+                                                                        <th scope="col">Rest Time</th>
+                                                                        <th scope="col"></th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr>
+                                                                        <td className="idno">3390</td>
+                                                                        <td>Butt Kicks</td>
+                                                                        <td>
+                                                                            <div className="inputlist">
+                                                                                <input type="text" className="form-control" name="sets" placeholder="# of Sets" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="reps" placeholder="# of Sets" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="exersisetime" placeholder="Add Time" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="resttime" placeholder="Add Time" /></div></td>
+                                                                        <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                    </tr>
+                                                                    <tr>
+
+                                                                        <td className="idno">3390</td>
+                                                                        <td>Butt Kicks</td>
+                                                                        <td>
+                                                                            <div className="inputlist">
+                                                                                <input type="text" className="form-control" name="sets" placeholder="# of Sets" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="reps" placeholder="# of Sets" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="exersisetime" placeholder="Add Time" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="resttime" placeholder="Add Time" /></div></td>
+                                                                        <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                    </tr>
+                                                                    <tr>
+
+                                                                        <td className="idno">3390</td>
+                                                                        <td>Butt Kicks</td>
+                                                                        <td>
+                                                                            <div className="inputlist">
+                                                                                <input type="text" className="form-control" name="sets" placeholder="# of Sets" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="reps" placeholder="# of Sets" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="exersisetime" placeholder="Add Time" /></div></td>
+                                                                        <td><div className="inputlist">
+                                                                            <input type="text" className="form-control" name="resttime" placeholder="Add Time" /></div></td>
+                                                                        <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+                                                            <button> Add to WorkOut</button>
+                                                            <Link to='/WorkOut/WorkContent/'>Total Workout Content</Link>
+                                                        </div>
+                                                        <div className="userlist AMRAP pt-5" style={{ 'display': 'none' }}>
+                                                            <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                                                <h3>Exercise In AMRAP</h3>
+                                                                <div className="table" id="AMRAP">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+
+                                                                                <th scope="col">ID</th>
+                                                                                <th scope="col">Title</th>
+                                                                                <th scope="col">Sets</th>
+                                                                                <th scope="col">Reps</th>
+                                                                                <th scope="col"></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+
+                                                                                <td className="idno">453</td>
+                                                                                <td>Butt Kicks</td>
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="10" /></div></td>
+                                                                                <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                            </tr>
+                                                                            <tr>
+
+                                                                                <td className="idno">1235</td>
+                                                                                <td>Jumping Jacks</td>
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="10" /></div></td>
+                                                                                <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                            </tr>
+                                                                            <tr>
+
+                                                                                <td className="idno">4</td>
+                                                                                <td>Glute Bridge Holds</td>
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="Enter # of Reps" /></div></td>
+                                                                                <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                            </tr>
+
+
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                                <h3>Round Details</h3>
+
+                                                                <div className="table" id="AMRAP">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+
+                                                                                <th scope="col">Rounds</th>
+                                                                                <th scope="col">Exercise Time</th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+
+
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="Enter # of Rounds" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="Add Time" /></div></td>
+
+
+                                                                            </tr>
+
+
+
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <button> Add New Series</button>
+                                                                    <Link>Add To WorkOut</Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="userlist AMRAP pt-5" style={{ 'display': 'none' }}>
+                                                            <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                                                                <h3>Exercise In SuperSets/Circut</h3>
+
+                                                                <div className="table" id="AMRAP">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+
+                                                                                <th scope="col">ID</th>
+                                                                                <th scope="col">Title</th>
+                                                                                <th scope="col">Sets</th>
+                                                                                <th scope="col">Reps</th>
+                                                                                <th scope="col"></th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+
+                                                                                <td className="idno">453</td>
+                                                                                <td>Butt Kicks</td>
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="10" /></div></td>
+                                                                                <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                            </tr>
+                                                                            <tr>
+
+                                                                                <td className="idno">1235</td>
+                                                                                <td>Jumping Jacks</td>
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="10" /></div></td>
+                                                                                <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                            </tr>
+                                                                            <tr>
+
+                                                                                <td className="idno">4</td>
+                                                                                <td>Glute Bridge Holds</td>
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="reps" placeholder="Enter # of Reps" /></div></td>
+                                                                                <td><i class="fa-regular fa-trash"></i></td>
+
+                                                                            </tr>
+
+
+                                                                        </tbody>
+                                                                    </table>
+
+                                                                </div>
+                                                                <h3>Round Details</h3>
+
+                                                                <div className="table" id="AMRAP">
+                                                                    <table class="table table-hover">
+                                                                        <thead>
+                                                                            <tr>
+
+                                                                                <th scope="col">Sets</th>
+                                                                                <th scope="col">Exercise Time</th>
+                                                                                <th scope="col">Rest Time</th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                            <tr>
+
+
+                                                                                <td>
+                                                                                    <div className="inputlist">
+                                                                                        <input type="text" className="form-control" name="sets" placeholder="Enter # of Sets" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="addtime" placeholder="Add Time" /></div></td>
+                                                                                <td><div className="inputlist">
+                                                                                    <input type="text" className="form-control" name="resttime" placeholder="00:40" /></div></td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <button> Add New Series</button>
+                                                                    <Link>Add To WorkOut</Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                                 {exerciseWorkoutData?.data && (
                                                     <div className="table">
                                                         <form action='javascript::void(0);'>
@@ -395,7 +793,6 @@ const WorkOutDetails = () => {
                                                                             <tr key={index}>
                                                                                 <td className="idno">{index + 1}</td>
                                                                                 <td>{exerciseWorkoutAll.exerciseTitle}</td>
-
                                                                                 <td>
                                                                                     <div className="inputlist">
                                                                                         <input

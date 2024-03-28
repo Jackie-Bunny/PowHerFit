@@ -82,6 +82,9 @@ import PromotionDetails from "../Components/Promotions/PromotionDetails";
 import Profile from "../Components/Profile";
 import NotFound from "../Components/404";
 
+import WorkContent from "../Components/WorkOut/WorkContent";
+
+
 function AppRouter() {
 
    return (
@@ -167,6 +170,8 @@ function AppRouter() {
                <Route path="/Promotions" element={<Promotions />}></Route>
                <Route path="/Promotions/CreatePromotion" element={<CreatePromotion />}></Route>
                <Route path="/Promotions/PromotionDetails/" element={<PromotionDetails />}></Route>
+
+               <Route path="/WorkOut/WorkContent/" element={<WorkContent />}></Route>
 
 
             </Routes>

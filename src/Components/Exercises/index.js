@@ -87,7 +87,7 @@ const Exercises = () => {
                                                     <th scope="col"></th>
                                                     <th scope="col">ID</th>
                                                     <th scope="col">Title</th>
-                                                    <th scope="col">EXERCISE TYPE</th>
+                                                    {/* <th scope="col">EXERCISE TYPE</th> */}
                                                     <th scope="col">Location</th>
                                                     <th scope="col">Superset/Circuit</th>
                                                     <th scope="col"></th>
@@ -106,7 +106,7 @@ const Exercises = () => {
                                                         </td>
                                                         <td className="idno">{index + 1}</td>
                                                         <td><Link to={`/Exercises/ExercisesDetails/${exercise._id}`}>{exercise.title}</Link></td>
-                                                        <td>{exercise.exerciseType}</td>
+                                                        {/* <td>{exercise.exerciseType}</td> */}
                                                         <td>{exercise.location}</td>
                                                         <td><i className="fa-light fa-circle-xmark"></i></td>
                                                         <td><i className="fa-regular fa-eye"></i></td>

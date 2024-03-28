@@ -27,7 +27,7 @@ const CreateExercise = () => {
     const [title, setTitle] = useState('');
     const [description, setdescription] = useState('');
     const [videoUrl, setvideoUrl] = useState('');
-    const [exerciseType, setexerciseType] = useState('');
+    // const [exerciseType, setexerciseType] = useState('');
     const [location, setlocation] = useState('');
 
     const handleChange = (setStateFunction) => (e) => setStateFunction(e.target.value);
@@ -37,7 +37,7 @@ const CreateExercise = () => {
     const handleDescriptionChange = handleChange(setdescription);
     const handleVideoUrlChange = handleChange(setvideoUrl);
     const handleLocationChange = handleChange(setlocation);
-    const handleExerciseType = handleChange(setexerciseType);
+    // const handleExerciseType = handleChange(setexerciseType);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -45,11 +45,11 @@ const CreateExercise = () => {
             "title": title,
             "description": description,
             "videoUrl": videoUrl,
-            "exerciseType": exerciseType,
+            // "exerciseType": exerciseType,
             "location": location,
             "superset_circuit": circuit,
         });
-        console.log(data);
+        console.log("Form data",data);
         let config = {
             method: 'post',
             maxBodyLength: Infinity,
@@ -156,7 +156,7 @@ const CreateExercise = () => {
                                         </div>
                                     </div>
                                     <hr className="line" />
-                                    <div className="row">
+                                    {/* <div className="row">
                                         <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                                             <div className="labellist">
                                                 <label>Exercise Method *</label>
@@ -179,7 +179,7 @@ const CreateExercise = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <hr className="line" />
+                                    <hr className="line" /> */}
                                     <div className="row">
                                         <div className="col-12 col-sm-12 col-md-3 col-lg-3 col-xl-3 col-xxl-3">
                                             <div className="labellist">

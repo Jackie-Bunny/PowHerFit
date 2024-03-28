@@ -71,7 +71,7 @@ const SideNav = () => {
                                                         Programs
                                                     </NavLink>
                                                 </li>
-                                                <li>
+                                                {/* <li>
                                                     <NavLink to="/Weeks" activeclassname="active">
                                                         Weeks
                                                     </NavLink>
@@ -80,25 +80,15 @@ const SideNav = () => {
                                                     <NavLink to="/Method" activeclassname="active">
                                                         Method
                                                     </NavLink>
-                                                </li>
+                                                </li> */}
                                                 <li>
                                                     <NavLink to="/Workout" activeclassname="active">
-                                                        Workout
+                                                        Workouts
                                                     </NavLink>
                                                 </li>
                                                 <li>
                                                     <NavLink to="/Exercises" activeclassname="active">
                                                         Exercises
-                                                    </NavLink>
-                                                </li>
-                                                <li>
-                                                    <NavLink to="/RecommendedCoaches" activeclassname="active">
-                                                        Recommended Coaches
-                                                    </NavLink>
-                                                </li>
-                                                <li>
-                                                    <NavLink to="/RecommendedPrograms" activeclassname="active">
-                                                        Recommended Programs
                                                     </NavLink>
                                                 </li>
                                             </ul>
@@ -133,11 +123,23 @@ const SideNav = () => {
                                                 <li>
                                                     <NavLink to="/ContentPages/" activeclassname="active">
                                                         Content Pages
-                                                    </NavLink></li>
+                                                    </NavLink>
+                                                </li>
                                                 <li>
                                                     <NavLink to="/Nutrition/" activeclassname="active">
                                                         Nutrition
-                                                    </NavLink></li>
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink to="/RecommendedCoaches" activeclassname="active">
+                                                        Recommended Coaches
+                                                    </NavLink>
+                                                </li>
+                                                <li>
+                                                    <NavLink to="/RecommendedPrograms" activeclassname="active">
+                                                        Recommended Programs
+                                                    </NavLink>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
