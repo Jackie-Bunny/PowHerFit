@@ -707,3 +707,110 @@ td.critrialist a {
     display: block;
     text-align: center;
 }
+
+
+/* last css satrt */
+#seriestitle {
+    border: 0;
+    border-bottom: 1px solid #00000052;
+    border-radius: 0;
+}
+
+#showexrcise button {
+    background-color: #e8118bbf;
+    border: 0;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    float: right;
+}
+
+#showexrcise button {
+    margin: 0 5px;
+}
+
+#showexrcise a {
+    background-color: #e8118bbf;
+    border: 0;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    float: right;
+}
+
+/* span.smallbox {
+    background-color: #ccc;
+    color: #fff;
+    padding: 3px 8px;
+    border-radius: 10px;
+} */
+
+#AMRAP button {
+    background-color: #e8118bbf;
+    border: 0;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    float: right;
+}
+
+#AMRAP a {
+    background-color: #e8118bbf;
+    border: 0;
+    color: #fff;
+    padding: 10px 25px;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 10px;
+    float: right;
+    margin: 0 11px;
+}
+
+#AMRAP {
+    padding: 0;
+    width: 80%;
+}
+
+/* last css end */
+
+
+.mobileapptext h3 {
+    color: #64748B;
+    font-weight: 400;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin-bottom: 2.75rem;
+}
+
+.mobileappsec .swiper-button-prev:after {
+    font-size: x-large;
+    background-color: #EA49A6;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.mobileappsec .swiper-button-next:after {
+    font-size: x-large;
+    background-color: #EA49A6;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
