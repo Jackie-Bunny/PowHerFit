@@ -226,9 +226,18 @@ const WorkContent = () => {
                         <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                           <select class="form-select" aria-label="Default select example" name='methodId' className="form-select" onChange={handleMethodChange}>
                             <option value="">-- Choose Method --</option>
-                            {methods.slice(-2).map(method => (
+                            {/* {methods.slice(-2).map(method => (
                               <option key={method._id} value={method._id}>{method.methodName}</option>
-                            ))}
+                            ))} */}
+                            {methods.map(method => {
+                              if (method.methodName !== 'Regular Exercises' && method.methodName !== 'HIIT (High Intensity Interval Training)' && method.methodName !== 'Progressive Weighted Exercises') {
+                                return (
+                                  <option key={method._id} value={method._id}>{method.methodName}</option>
+                                );
+                              } else {
+                                return null; // Skip this option
+                              }
+                            })}
                           </select>
                           <div className="addExersise pt-5">
                             <button type='submit'>Add</button>

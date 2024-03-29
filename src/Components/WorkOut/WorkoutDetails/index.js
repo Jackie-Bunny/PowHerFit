@@ -196,7 +196,7 @@ const WorkOutDetails = () => {
             .then((response) => {
                 console.log("Exercise added to method successfuly", response.data);
                 setExerciseData(response.data); // Assuming data.data contains the methods array
-                // window.location.reload();
+                window.location.reload();
             })
             .catch((error) => {
                 console.log(error);
@@ -426,9 +426,18 @@ const WorkOutDetails = () => {
                                                                     <div className="col-12 col-sm-12 col-md-8 col-lg-8 col-xl-8 col-xxl-8">
                                                                         <select class="form-select" aria-label="Default select example" name='methodId' className="form-select" onChange={handleMethodChange}>
                                                                             <option value="">-- Choose Method --</option>
-                                                                            {methods.map(method => (
+                                                                            {/* {methods.map(method => (
                                                                                 <option key={method._id} value={method._id}>{method.methodName}</option>
-                                                                            ))}
+                                                                            ))} */}
+                                                                            {methods.map(method => {
+                                                                                if (method.methodName !== 'EMOM' && method.methodName !== 'AMRAP (As Many Rounds As Possible)' && method.methodName !== 'Supersets/Circuits') {
+                                                                                    return (
+                                                                                        <option key={method._id} value={method._id}>{method.methodName}</option>
+                                                                                    );
+                                                                                } else {
+                                                                                    return null; // Skip this option
+                                                                                }
+                                                                            })}
                                                                         </select>
                                                                         <div className="addExersise pt-5">
                                                                             <button type='submit'>Add</button>
@@ -549,6 +558,7 @@ const WorkOutDetails = () => {
                                                                                         type="text"
                                                                                         className="form-control"
                                                                                         name="intervals"
+                                                                                        value={exerciseWorkoutAll.exerciseIntervals}
                                                                                         placeholder="# of intervals" />
                                                                                 </div>
                                                                             </td>
