@@ -171,7 +171,7 @@ function AppRouter() {
                <Route path="/Promotions/CreatePromotion" element={<CreatePromotion />}></Route>
                <Route path="/Promotions/PromotionDetails/" element={<PromotionDetails />}></Route>
 
-               <Route path="/WorkOut/WorkContent/" element={<WorkContent />}></Route>
+               <Route path="/WorkOut/WorkContent/:id" element={<WorkContent />}></Route>
 
 
             </Routes>

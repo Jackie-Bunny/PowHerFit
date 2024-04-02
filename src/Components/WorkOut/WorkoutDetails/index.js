@@ -441,7 +441,7 @@ const WorkOutDetails = () => {
                                                                         </select>
                                                                         <div className="addExersise pt-5">
                                                                             <button type='submit'>Add</button>
-                                                                            <Link to='/WorkOut/WorkContent/'><button type='submit' className='mx-2'>Add Series</button></Link>
+                                                                            <Link to={`/WorkOut/WorkContent/${workout._id}`}><button type='submit' className='mx-2'>Add Series</button></Link>
                                                                         </div>
                                                                     </div>
                                                                 </div>
