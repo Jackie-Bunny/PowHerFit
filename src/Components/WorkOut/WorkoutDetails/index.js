@@ -290,7 +290,6 @@ const WorkOutDetails = () => {
                 "exerciseTime": exerciseTime[index]?.exerciseTime,
                 "exerciseRestTime": restTime[index]?.exerciseRestTime
             });
-
             console.log("Exercise updating data", data, "Exercise builder id", exercise_ID)
             // return
             let config = {
@@ -430,7 +429,7 @@ const WorkOutDetails = () => {
                                                                                 <option key={method._id} value={method._id}>{method.methodName}</option>
                                                                             ))} */}
                                                                             {methods.map(method => {
-                                                                                if (method.methodName !== 'EMOM' && method.methodName !== 'AMRAP (As Many Rounds As Possible)' && method.methodName !== 'Supersets/Circuits') {
+                                                                                if (method.methodName !== 'EMOM' && method.methodName !== 'AMRAP' && method.methodName !== 'Supersets/Circuits') {
                                                                                     return (
                                                                                         <option key={method._id} value={method._id}>{method.methodName}</option>
                                                                                     );
