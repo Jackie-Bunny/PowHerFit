@@ -176,6 +176,7 @@ const WorkContent = () => {
   const [reps, setReps] = useState([]);
   const [round, setRounds] = useState([]);
   const [exerciseTime, setExTime] = useState([]);
+  const [restTime, setRestTime] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -218,6 +219,12 @@ const WorkContent = () => {
             })
             console.log('Ex timeeeeee', exerciseTime);
             setExTime(exerciseTime)
+            const restTime = []
+            data.data.map((item, index) => {
+              restTime.push({ index: index, restTime: item.restTime })
+            })
+            console.log('Rest timeeeeee', restTime);
+            setRestTime(restTime)
           }
         } else {
           console.error('Failed to fetch series:', data.message);
@@ -328,6 +335,88 @@ const WorkContent = () => {
       setLoading(false); // Set loading state to false regardless of success or error
     }
   };
+  // add and update supersets/circuit
+  const updateSuperReps = async (index, e) => {
+    const seriesId = seriesData.data[index]._id;
+    try {
+      console.log("Series Id", seriesId, 'Superset reps', reps[index]?.reps);
+      // return
+      const response = await axios.post(
+        `https://appsdemo.pro/Pawherfit/method-exercise/update-series/${seriesId}`,
+        {
+          "reps": reps[index]?.reps
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      // Update the state variables after successful update
+      console.log("Superset series updated data", response.data.data);
+      const updatedExerciseData = response.data.data;
+      const newReps = [...reps]; // Copy existing reps array
+      newReps[index] = { reps: updatedExerciseData.reps }; // Update reps at the specified index
+      console.log("Supersets new reps:", newReps);
+      setReps(newReps); // Update reps state variable     
+      window.location.reload();
+    } catch (error) {
+      console.log('Error updating workout:', error);
+    } finally {
+      setLoading(false); // Set loading state to false regardless of success or error
+    }
+  };
+  const handleRestTimeChange = (e, index) => {
+    const newData = [...restTime];
+    const updatedObject = { ...newData[index], restTime: e.target.value };
+    newData[index] = updatedObject;
+    setRestTime(newData);
+  };
+  const updateSuperSetsTime = async (index, e) => {
+    const methodName = seriesData.data[index].methodName;
+    try {
+      console.log("Super Method name", methodName, 'Superset sets', sets[index]?.sets, 'Superset ex time', exerciseTime[index]?.exerciseTime, 'Superset rest time', restTime[index]?.restTime);
+      // return
+      const response = await axios.post(
+        `https://appsdemo.pro/Pawherfit/method-exercise/update-rest-exTime-sets`,
+        {
+          "restTime": restTime[index]?.restTime,
+          "exTime": exerciseTime[index]?.exerciseTime,
+          "methodName": methodName,
+          "sets": sets[index]?.sets,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      // Update the state variables after successful update
+      console.log("Superset series sets, ex time and rest time updated data", response.data);
+      const updatedExerciseData = response.data.data;
+      const newSets = [...sets]; // Copy existing sets array
+      newSets[index] = { sets: updatedExerciseData.sets }; // Update sets at the specified index
+      console.log("Supersets new sets:", newSets);
+      setSets(newSets); // Update sets state variable 
+      const newExTime = [...exerciseTime]; // Copy existing exerciseTime array
+      newExTime[index] = { exerciseTime: updatedExerciseData.exerciseTime }; // Update exerciseTime at the specified index
+      console.log("Supersets new exr timeee:", newExTime);
+      setExTime(newExTime); // Update exerciseTime state variable 
+      const newRest = [...restTime]; // Copy existing restTime array
+      newRest[index] = { restTime: updatedExerciseData.restTime }; // Update restTime at the specified index
+      console.log("Supersets new sets:", newRest);
+      setSets(newRest); // Update restTime state variable     
+      window.location.reload();
+    } catch (error) {
+      console.log('Error updating workout:', error);
+    } finally {
+      setLoading(false); // Set loading state to false regardless of success or error
+    }
+  };
+  // Create a Set to keep track of unique method names
+  const uniqueMethodNames = new Set();
 
   return (
     <>
@@ -471,25 +560,27 @@ const WorkContent = () => {
                             </thead>
                             <tbody>
                               {seriesData && seriesData.data && seriesData.data.map((allSeriesData, index) => (
-                                console.log('Setssss changed', sets),
-                                console.log('Repssss changed', reps),
-                                <tr key={index} >
-                                  <td className="idno">{index + 1}</td>
-                                  <td>{allSeriesData.exerciseTitle}</td>
-                                  <td>
-                                    <div className="inputlist">
-                                      <input type="text" className="form-control" name="sets" value={sets[index]?.sets} onChange={(e) => handleSetsChange(e, index)} placeholder="N/A" />
-                                    </div>
-                                  </td>
-                                  <td>
-                                    <div className="inputlist">
-                                      <input type="text" className="form-control" name="reps" value={reps[index]?.reps} onChange={(e) => handleRepsChange(e, index)} placeholder="N/A" />
-                                    </div>
-                                  </td>
-                                  <td><span className='smallbox' style={{ 'color': '#EA4AA6' }}>{allSeriesData.methodName}</span></td>
-                                  <td className='text-center'><i onClick={() => updateSeriesExercise(index)} className="fa-regular fa-pencil" style={{ cursor: 'pointer', color: 'blue' }}></i></td>
-                                  <td><i className="fa-regular fa-trash"></i></td>
-                                </tr>
+                                (allSeriesData.methodName === 'EMOM' || allSeriesData.methodName === 'AMRAP') && (
+                                  console.log('Setssss changed', sets),
+                                  console.log('Repssss changed', reps),
+                                  <tr key={index} >
+                                    <td className="idno">{index + 1}</td>
+                                    <td>{allSeriesData.exerciseTitle}</td>
+                                    <td>
+                                      <div className="inputlist">
+                                        <input type="text" className="form-control" name="sets" value={sets[index]?.sets} onChange={(e) => handleSetsChange(e, index)} placeholder="N/A" />
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div className="inputlist">
+                                        <input type="text" className="form-control" name="reps" value={reps[index]?.reps} onChange={(e) => handleRepsChange(e, index)} placeholder="N/A" />
+                                      </div>
+                                    </td>
+                                    <td><span className='smallbox' style={{ 'color': '#EA4AA6' }}>{allSeriesData.methodName}</span></td>
+                                    <td className='text-center'><i onClick={() => updateSeriesExercise(index)} className="fa-regular fa-pencil" style={{ cursor: 'pointer', color: 'blue' }}></i></td>
+                                    <td><i className="fa-regular fa-trash"></i></td>
+                                  </tr>
+                                )
                               ))}
                             </tbody>
                           </table>
@@ -505,150 +596,145 @@ const WorkContent = () => {
                                 <th scope="col">Update</th>
                               </tr>
                             </thead>
-                            {seriesData &&
-                              seriesData.data &&
-                              Array.from(new Set(seriesData.data.map(item => item.methodName))).map((methodName, index) => {
-                                const seriesDataItem = seriesData.data.find(item => item.methodName === methodName);
-                                console.log('Rounds changed', round);
-                                console.log('Exercise time changed', exerciseTime);
-                                if (seriesDataItem) {
-                                  return (
-                                    <tr key={index}>
-                                      <td>
-                                        <div className="inputlist">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            name="round"
-                                            value={round[index]?.round}
-                                            onChange={(e) => handleRoundChange(e, index)}
-                                            placeholder="0"
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <div className="inputlist">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            name="exerciseTime"
-                                            value={exerciseTime[index]?.exerciseTime}
-                                            onChange={(e) => handleExTimeChange(e, index)}
-                                            placeholder="00:00"
-                                          />
-                                        </div>
-                                      </td>
-                                      <td>
-                                        <span className='smallbox' style={{ 'color': '#EA4AA6' }}>{methodName}</span>
-                                      </td>
-                                      <td className='text-center'>
-                                        <i
-                                          onClick={(e) => updateExRoundTime(index)}
-                                          className="fa-regular fa-pencil"
-                                          style={{ cursor: 'pointer', color: 'blue' }}
-                                        ></i>
-                                      </td>
-                                    </tr>
-                                  );
-                                }
+
+                            {seriesData && seriesData.data && seriesData.data.map((allSeriesData, index) => {
+                              // Check if the method name is 'EMOM' or 'AMRAP' and if it's not already in the Set
+                              if ((allSeriesData.methodName === 'EMOM' || allSeriesData.methodName === 'AMRAP') && !uniqueMethodNames.has(allSeriesData.methodName)) {
+                                // Add the method name to the Set
+                                uniqueMethodNames.add(allSeriesData.methodName);
+
+                                // Render the row
+                                return (
+                                  <tr key={index}>
+                                    <td>
+                                      <div className="inputlist">
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          name="round"
+                                          value={round[index]?.round}
+                                          onChange={(e) => handleRoundChange(e, index)}
+                                          placeholder="0"
+                                        />
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <div className="inputlist">
+                                        <input
+                                          type="text"
+                                          className="form-control"
+                                          name="exerciseTime"
+                                          value={exerciseTime[index]?.exerciseTime}
+                                          onChange={(e) => handleExTimeChange(e, index)}
+                                          placeholder="00:00"
+                                        />
+                                      </div>
+                                    </td>
+                                    <td>
+                                      <span className='smallbox' style={{ 'color': '#EA4AA6' }}>{allSeriesData.methodName}</span>
+                                    </td>
+                                    <td className='text-center'>
+                                      <i
+                                        onClick={(e) => updateExRoundTime(index)}
+                                        className="fa-regular fa-pencil"
+                                        style={{ cursor: 'pointer', color: 'blue' }}
+                                      ></i>
+                                    </td>
+                                  </tr>
+                                );
+                              } else {
+                                // If the method name is already in the Set, return null to skip rendering this row
                                 return null;
-                              })}
+                              }
+                            })}
                           </table>
                         </div>
                       </div>
                     </div>
                   )}
-                  <div className="userlist AMRAP pt-5" style={{ 'display': 'none' }}>
-                    <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
-                      <h3>Exercise In SuperSets/Circut</h3>
 
-                      <div className="table" id="AMRAP">
-                        <table class="table table-hover">
-                          <thead>
-                            <tr>
-
-                              <th scope="col">ID</th>
-                              <th scope="col">Title</th>
-                              <th scope="col">Sets</th>
-                              <th scope="col">Reps</th>
-                              <th scope="col"></th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-
-                              <td className="idno">453</td>
-                              <td>Butt Kicks</td>
-                              <td>
-                                <div className="inputlist">
-                                  <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
-                              <td><div className="inputlist">
-                                <input type="text" className="form-control" name="reps" placeholder="10" /></div></td>
-                              <td><i class="fa-regular fa-trash"></i></td>
-
-                            </tr>
-                            <tr>
-
-                              <td className="idno">1235</td>
-                              <td>Jumping Jacks</td>
-                              <td>
-                                <div className="inputlist">
-                                  <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
-                              <td><div className="inputlist">
-                                <input type="text" className="form-control" name="reps" placeholder="10" /></div></td>
-                              <td><i class="fa-regular fa-trash"></i></td>
-
-                            </tr>
-                            <tr>
-
-                              <td className="idno">4</td>
-                              <td>Glute Bridge Holds</td>
-                              <td>
-                                <div className="inputlist">
-                                  <input type="text" className="form-control" name="sets" placeholder="1" /></div></td>
-                              <td><div className="inputlist">
-                                <input type="text" className="form-control" name="reps" placeholder="Enter # of Reps" /></div></td>
-                              <td><i class="fa-regular fa-trash"></i></td>
-
-                            </tr>
-
-
-                          </tbody>
-                        </table>
-
-                      </div>
-                      <h3>Round Details</h3>
-
-                      <div className="table" id="AMRAP">
-                        <table class="table table-hover">
-                          <thead>
-                            <tr>
-
-                              <th scope="col">Sets</th>
-                              <th scope="col">Exercise Time</th>
-                              <th scope="col">Rest Time</th>
-
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr>
-
-
-                              <td>
-                                <div className="inputlist">
-                                  <input type="text" className="form-control" name="sets" placeholder="Enter # of Sets" /></div></td>
-                              <td><div className="inputlist">
-                                <input type="text" className="form-control" name="addtime" placeholder="Add Time" /></div></td>
-                              <td><div className="inputlist">
-                                <input type="text" className="form-control" name="resttime" placeholder="00:40" /></div></td>
-                            </tr>
-                          </tbody>
-                        </table>
-                        <button> Add New Series</button>
-                        <Link>Add To WorkOut</Link>
-                      </div>
-                    </div>
-                  </div>
+                  {seriesData && seriesData.data && seriesData.data.map(item => {
+                    if (item.methodName === 'Supersets/Circuits') {
+                      return (
+                        <div className="userlist pt-5">
+                          <div className="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12 col-xxl-12">
+                            <h3>Exercises In SuperSets/Circut</h3>
+                            <div className="table" id="AMRAP">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Reps</th>
+                                    <th scope="col">Update</th>
+                                    <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {seriesData && seriesData.data && seriesData.data.map((supersetCircuitData, index) => (
+                                    (supersetCircuitData.methodName === 'Supersets/Circuits') && (
+                                      console.log('Superset Reps changed', reps),
+                                      <tr key={index} >
+                                        <td className="idno">{index + 1}</td>
+                                        <td>{supersetCircuitData.exerciseTitle}</td>
+                                        <td>
+                                          <div className="inputlist">
+                                            <input type="text" className="form-control" name="reps" value={reps[index]?.reps} onChange={(e) => handleRepsChange(e, index)} placeholder="Enter # Reps" />
+                                          </div>
+                                        </td>
+                                        <td className='text-center'><i onClick={() => updateSuperReps(index)} className="fa-regular fa-pencil" style={{ cursor: 'pointer', color: 'blue' }}></i></td>
+                                        <td><i class="fa-regular fa-trash"></i></td>
+                                      </tr>
+                                    )
+                                  ))}
+                                </tbody>
+                              </table>
+                            </div>
+                            <h3>Round Details</h3>
+                            <div className="table" id="AMRAP">
+                              <table class="table table-hover">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">Sets</th>
+                                    <th scope="col">Exercise Time</th>
+                                    <th scope="col">Rest Time</th>
+                                    <th scope="col">Update</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {seriesData && seriesData.data && seriesData.data.map((allSeriesData, index) => (
+                                    (allSeriesData.methodName === 'Supersets/Circuits') && (
+                                      console.log('Super sets changed', sets),
+                                      console.log('Super Exercise time changed', exerciseTime),
+                                      console.log('Super Rest time changed', restTime),
+                                      <tr key={index}>
+                                        <td>
+                                          <div className="inputlist">
+                                            <input type="text" className="form-control" name="sets" value={sets[index]?.sets} onChange={(e) => handleSetsChange(e, index)} placeholder="Enter # Sets" /></div></td>
+                                        <td><div className="inputlist">
+                                          <input type="text" className="form-control" name="exerciseTime" value={exerciseTime[index]?.exerciseTime} onChange={(e) => handleExTimeChange(e, index)} placeholder="00:00" /></div></td>
+                                        <td><div className="inputlist">
+                                          <input type="text" className="form-control" name="restTime" value={restTime[index]?.restTime} onChange={(e) => handleRestTimeChange(e, index)} placeholder="00:00" /></div></td>
+                                        <td className='text-center'>
+                                          <i
+                                            onClick={(e) => updateSuperSetsTime(index)}
+                                            className="fa-regular fa-pencil"
+                                            style={{ cursor: 'pointer', color: 'blue' }}
+                                          ></i>
+                                        </td>
+                                      </tr>
+                                    ))
+                                  )}
+                                </tbody>
+                              </table>
+                              <button> Add New Series</button>
+                              <Link>Add To WorkOut</Link>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                  })}
                 </div>
               </div>
 
